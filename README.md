@@ -1,6 +1,18 @@
-# Getting Started with Create React App
+# Every Man Jacked (Client)
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Every Man Jacked is a workout tool that helps users structure their own workouts with specific goals for strength and weight loss in mind. It allows a user to select an exercise category / muscle group to filter exercises before constructing their own workout. It also has a feature to generate a randomized workout based on criteria they specify.
+
+This application is built using TypeScript and React for a quick and concise experience.
+
+### Upcoming Features
+
+- [ ] UI / UX redesign
+- [ ] User authentication
+- [ ] Exercise log
+- [ ] User messenger
+- [ ] Coaching role / support
+- [ ] Multi-language Support
+  - [ ] Spanish
 
 ## Available Scripts
 
