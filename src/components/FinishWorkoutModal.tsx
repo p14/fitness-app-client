@@ -1,23 +1,26 @@
-import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Typography } from '@mui/material';
+import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
 
 interface FinishModalProps {
-  openModal: boolean
-  handleCompleteWorkout: () => void
+  handleClose: (value: React.SetStateAction<boolean>) => void
 }
 
-const FinishModal = ({ openModal, handleCompleteWorkout }: FinishModalProps) => {
+const FinishModal = ({ handleClose }: FinishModalProps) => {
+
+  const navigate = useNavigate();
+
   return (
-    <Dialog open={openModal} fullWidth maxWidth='xs' onClose={() => handleCompleteWorkout()}>
+    <Dialog open fullWidth maxWidth='xs' onClose={handleClose}>
       <DialogTitle>
         Workout Complete
       </DialogTitle>
       <DialogContent>
-        <Typography>
+        <DialogContentText>
           Great job, keep up the awesome work!
-        </Typography>
+        </DialogContentText>
       </DialogContent>
       <DialogActions>
-        <Button variant='contained' onClick={() => handleCompleteWorkout()}>
+        <Button variant='contained' onClick={() => navigate('/')}>
           End Workout
         </Button>
       </DialogActions>

@@ -10,15 +10,21 @@ import PageNotFound from './components/PageNotFound';
 // import About from './components/About';
 import LoginForm from './components/LoginForm';
 import RegisterForm from './components/RegisterForm';
+import WorkoutDashboard from './components/workout/WorkoutDashboard';
+import WorkoutFormCreate from './components/workout/WorkoutFormCreate';
+import { ExerciseProvider } from './context/exercise.context';
 import { FeedbackProvider } from './context/feedback.context';
 import { SessionProvider } from './context/session.context';
+import { WorkoutProvider } from './context/workout.context';
+import WorkoutEditor from './components/workout/WorkoutEditor';
+import WorkoutRender from './components/workout/WorkoutRender';
 
 const App: React.FC = () => {
   return (
     <Router>
       <SessionProvider>
-        {/* <UserProvider> */}
-          {/* <ExerciseProvider> */}
+        <WorkoutProvider>
+          <ExerciseProvider>
             <FeedbackProvider>
               <Navbar />
               <Routes>
@@ -30,21 +36,17 @@ const App: React.FC = () => {
                 <Route element={<RequireAuth />}>
                   <Route path='/' element={<Dashboard />} />
                   <Route path='/generate' element={<GenerateWorkout />} />
-                  {/* <Route path='/customize' element={<CustomizeWorkout />} /> */}
-                  {/* <Route path='/about' element={<About />} /> */}
-                  {/* <Route path='/users' element={<UserDashboard />} /> */}
-                  {/* <Route path='/users/new' element={<UserFormCreate />} /> */}
-                  {/* <Route path='/users/:id' element={<UserEditor />} /> */}
-                  {/* <Route path='/exercises' element={<ExerciseDashboard />} /> */}
-                  {/* <Route path='/exercises/new' element={<ExerciseFormCreate />} /> */}
-                  {/* <Route path='/exercises/:id' element={<ExerciseEditor />} /> */}
+                  <Route path='/workouts' element={<WorkoutDashboard />} />
+                  <Route path='/workouts/new' element={<WorkoutFormCreate />} />
+                  <Route path='/workouts/:id' element={<WorkoutRender />} />
+                  <Route path='/workouts/:id/edit' element={<WorkoutEditor />} />
                   <Route path='*' element={<PageNotFound />} />
                 </Route>
               </Routes>
               <FeedbackAlert />
             </FeedbackProvider>
-          {/* </ExerciseProvider> */}
-        {/* </UserProvider> */}
+          </ExerciseProvider>
+        </WorkoutProvider>
       </SessionProvider>
     </Router>
   );

@@ -1,6 +1,6 @@
 import { Exercise } from '../models/exercise.model';
 
-export const capitalizeFirstLetter = (string: string) => {
+export const capitalize = (string: string) => {
   return string.charAt(0).toUpperCase() + string.slice(1);
 };
 
@@ -25,9 +25,9 @@ export const fetchExercises = async () => {
 export const randomVariant = (exercise: Exercise) => {
   if (exercise.variants) {
     const shuffledVariants: string[] = shuffle(exercise.variants);
-    return `${capitalizeFirstLetter(shuffledVariants[0])} ${exercise.name}`
+    return `${capitalize(shuffledVariants[0])} ${exercise.title}`
   } else {
-    return exercise.name
+    return exercise.title
   }
 };
 

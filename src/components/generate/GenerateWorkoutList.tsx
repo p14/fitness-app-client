@@ -1,5 +1,5 @@
 import { Box, Button, Checkbox, Typography } from '@mui/material';
-import { capitalizeFirstLetter, getBackgroundColor } from '../../utils/helpers';
+import { capitalize, getBackgroundColor } from '../../utils/helpers';
 
 interface GenerateWorkoutListProps {
   workout: string[]
@@ -11,11 +11,11 @@ const GenerateWorkoutList = ({ workout, category, setOpenModal }: GenerateWorkou
   return (
     <>
       <Typography variant='h4' sx={{ alignSelf: 'center', display: { xs: 'none', sm: 'inline' }, fontWeight: 400 }}>
-        {`${capitalizeFirstLetter(category)} Workout`}
+        {`${capitalize(category)} Workout`}
       </Typography>
 
       <Typography variant='h5' sx={{ alignSelf: 'center', display: { xs: 'inline', sm: 'none' }, fontWeight: 400 }}>
-        {`${capitalizeFirstLetter(category)} Workout`}
+        {`${capitalize(category)} Workout`}
       </Typography>
 
       <Box sx={{ alignSelf: 'center', border: '1px solid #ccc', margin: '1rem 0', maxWidth: '600px', width: '100%' }}>

@@ -24,16 +24,6 @@ const GenerateWorkout: React.FC = () => {
     setOpenWorkout(true);
   };
 
-  const handleCompleteWorkout = () => {
-    localStorage.clear();
-
-    setWorkout([]);
-    setCategory('');
-    setOpenWorkoutForm(true);
-    setOpenWorkout(false);
-    setOpenModal(false);
-  };
-
   // Check if there is a generated workout in local storage
   React.useEffect(() => {
     const generatedWorkout = localStorage.getItem('generated-workout');
@@ -64,10 +54,7 @@ const GenerateWorkout: React.FC = () => {
         />
       }
       { openModal &&
-        <FinishModal
-          openModal={openModal}
-          handleCompleteWorkout={handleCompleteWorkout}
-        />
+        <FinishModal handleClose={() => setOpenModal(false)} />
       }
     </>
   );

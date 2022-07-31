@@ -35,6 +35,10 @@ const Dashboard: React.FC = () => {
             <Button variant='contained' onClick={() => navigate('/customize')}>
               Customize
             </Button>
+            &nbsp;
+            <Button variant='contained' onClick={() => navigate('/workouts')}>
+              Workouts
+            </Button>
           </Box>
         </Box>
       </Container>
