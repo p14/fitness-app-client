@@ -1,5 +1,5 @@
 import { useNavigate, useParams } from 'react-router-dom';
-import { Check, FitnessCenterRounded, KeyboardBackspace } from '@mui/icons-material';
+import { Check, FitnessCenterRounded, KeyboardBackspace, Undo } from '@mui/icons-material';
 import { Avatar, Box, Button, Container, createTheme, CssBaseline, Divider, Grid, IconButton, LinearProgress, List, ListItem, ListItemText, ThemeProvider, Typography } from '@mui/material';
 import { Workout } from '../../models/workout.model';
 import { initialWorkoutData, parseExerciseCategories } from './workout.service';
@@ -10,7 +10,7 @@ import { useWorkoutContext } from '../../context/workout.context';
 import { useFeedbackContext } from '../../context/feedback.context';
 import FinishWorkoutModal from '../FinishWorkoutModal';
 
-const WorkoutForm = () => {
+const WorkoutRender = () => {
 
   const { id } = useParams();
   const exerciseContext = useExerciseContext()
@@ -98,19 +98,19 @@ const WorkoutForm = () => {
               <Grid container spacing={2}>
                 <Grid item xs={12}>
                   <List>
-                    {workout.exercises.map((exercise) => (
-                      <Box key={exercise.id}>
+                    {workout.exercises.map((exerciseId) => (
+                      <Box key={exerciseId}>
                         <ListItem
                           secondaryAction={
-                            <IconButton edge='end' onClick={() => handleCompleteToggle(exercise.id)}>
-                              <Check />
+                            <IconButton edge='end' onClick={() => handleCompleteToggle(exerciseId)}>
+                              {completedExercises.includes(exerciseId) ? <Undo /> : <Check /> }
                             </IconButton>
                           }
                         >
                           <ListItemText
-                            sx={{ textDecoration: completedExercises.includes(exercise.id) ? 'line-through' : 'none' }}
-                            primary={readExerciseById(exercise.id).title}
-                            secondary={parseExerciseCategories(readExerciseById(exercise.id).categories)}
+                            sx={{ textDecoration: completedExercises.includes(exerciseId) ? 'line-through' : 'none' }}
+                            primary={readExerciseById(exerciseId).title}
+                            secondary={parseExerciseCategories(readExerciseById(exerciseId).categories)}
                           />
                         </ListItem>
                         <Divider />
@@ -134,4 +134,4 @@ const WorkoutForm = () => {
   );
 }
 
-export default WorkoutForm;
+export default WorkoutRender;

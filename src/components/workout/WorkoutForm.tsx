@@ -76,16 +76,13 @@ const WorkoutForm = ({ id, workout, handleSetWorkout }: WorkoutFormProps) => {
 
   const handleAddExercise = (exerciseId: string) => {
     const updatedExercises = [...formik.values.exercises];
-    updatedExercises.push({
-      id: exerciseId,
-      sets: [],
-    });
+    updatedExercises.push(exerciseId);
     formik.setFieldValue('exercises', updatedExercises);
   };
 
   const handleRemoveExercise = (exerciseId: string) => {
     const updatedExercises = [...formik.values.exercises];
-    const index = updatedExercises.findIndex((exercise) => exercise.id === exerciseId);
+    const index = updatedExercises.findIndex((updatedExerciseId) => updatedExerciseId === exerciseId);
     if (index >= 0) {
       updatedExercises.splice(index, 1);
     }
@@ -186,18 +183,18 @@ const WorkoutForm = ({ id, workout, handleSetWorkout }: WorkoutFormProps) => {
                     </Button>
                   </Box>
                   <List>
-                    {formik.values.exercises.map((exercise) => (
-                      <Box key={exercise.id}>
+                    {formik.values.exercises.map((exerciseId) => (
+                      <Box key={exerciseId}>
                         <ListItem
                           secondaryAction={
-                            <IconButton edge='end' onClick={() => handleRemoveExercise(exercise.id)}>
+                            <IconButton edge='end' onClick={() => handleRemoveExercise(exerciseId)}>
                               <Delete />
                             </IconButton>
                           }
                         >
                           <ListItemText
-                            primary={readExerciseById(exercise.id).title}
-                            secondary={parseExerciseCategories(readExerciseById(exercise.id).categories)}
+                            primary={readExerciseById(exerciseId).title}
+                            secondary={parseExerciseCategories(readExerciseById(exerciseId).categories)}
                           />
                         </ListItem>
                         <Divider />

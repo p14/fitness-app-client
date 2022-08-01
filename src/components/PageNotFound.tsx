@@ -20,7 +20,7 @@ const PageNotFound: React.FC = () => {
           <Typography component='h1' variant='h5'>
             Sorry, the page you were looking for does not exist!
           </Typography>
-          <Button variant='contained' sx={{ marginBottom: 2, marginTop: 2 }} onClick={() => navigate('/')}>
+          <Button variant='contained' sx={{ marginBottom: 2, marginTop: 2 }} onClick={() => navigate('/dashboard')}>
             Return To Dashboard
           </Button>
         </Box>

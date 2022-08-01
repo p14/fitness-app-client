@@ -2,7 +2,7 @@ import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
 import { isTokenExpired, refresh } from '../../api/auth.api';
 import { BaseExerciseCategory } from '../../models/exercise.model';
 import { User } from '../../models/user.model';
-import { ExerciseItem, Workout, WorkoutCategory } from '../../models/workout.model';
+import { Workout, WorkoutCategory } from '../../models/workout.model';
 
 export const setupConfig = async (method: string, url: string, data?: Workout | User): Promise<AxiosRequestConfig> => {
   let accessToken = String(localStorage.getItem('AccessToken'));
@@ -38,7 +38,24 @@ export const saveWorkoutToUser = async (user: User, workoutId: string) => {
     ...user,
     workouts: [...user.workouts, workoutId],
   };
-  console.log(updatedUser);
+
+  const config = await setupConfig('PUT', `/users/${user._id}`, updatedUser);
+  return axios.request(config);
+};
+
+export const removeWorkoutFromUser = async (user: User, workoutId: string) => {
+  const updatedUserWorkouts = [...user.workouts];
+  const index = updatedUserWorkouts.findIndex((workout) => workout === workoutId);
+
+  if (index >= 0) {
+    updatedUserWorkouts.splice(index, 1);
+  }
+
+  const updatedUser = {
+    ...user,
+    workouts: updatedUserWorkouts,
+  };
+
   const config = await setupConfig('PUT', `/users/${user._id}`, updatedUser);
   return axios.request(config);
 };
@@ -46,7 +63,7 @@ export const saveWorkoutToUser = async (user: User, workoutId: string) => {
 export const initialWorkoutData: Workout = {
   title: '',
   category: WorkoutCategory.CHEST,
-  exercises: [] as ExerciseItem[],
+  exercises: [] as string[],
 };
 
 export const parseWorkout = (data: Workout): Workout => {

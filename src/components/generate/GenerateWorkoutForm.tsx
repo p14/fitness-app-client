@@ -1,9 +1,8 @@
-import { useNavigate } from 'react-router-dom';
-import { FitnessCenterRounded, KeyboardBackspace } from '@mui/icons-material';
-import { Avatar, Box, Button, Container, createTheme, CssBaseline, FormControl, FormControlLabel, Grid, MenuItem, Switch, TextField, ThemeProvider, Typography } from '@mui/material';
+import { FitnessCenterRounded } from '@mui/icons-material';
+import { Avatar, Box, Button, Container, createTheme, CssBaseline, FormControl, Grid, MenuItem, TextField, ThemeProvider, Typography } from '@mui/material';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
-import { exerciseCategories, exerciseLengths } from './generate.service';
+import { WorkoutCategory } from '../../models/workout.model';
 
 interface GenerateWorkoutFromProps {
   handleGenerateWorkout: ({ category, length, includeAbs }: {
@@ -15,20 +14,17 @@ interface GenerateWorkoutFromProps {
 
 const GenerateWorkoutForm = ({ handleGenerateWorkout }: GenerateWorkoutFromProps) => {
 
-  const navigate = useNavigate();
   const theme = createTheme();
 
   const validationSchema = Yup.object().shape({
-    category: Yup.string().required(),
-    length: Yup.string().required(),
-    includeAbs: Yup.boolean().required(),
+    category: Yup.string().oneOf(Object.values(WorkoutCategory)).required(),
+    length: Yup.number().required(),
   });
 
   const formik = useFormik({
     initialValues: {
-      category: '',
-      length: '',
-      includeAbs: false,
+      category: WorkoutCategory.CHEST,
+      length: 4,
     },
     validationSchema,
     onSubmit: (values: any) => {
@@ -40,11 +36,6 @@ const GenerateWorkoutForm = ({ handleGenerateWorkout }: GenerateWorkoutFromProps
     <ThemeProvider theme={theme}>
       <Container component='main' maxWidth='md'>
         <CssBaseline />
-        <Button onClick={() => navigate('/')} sx={{ cursor: 'pointer', display: 'flex', position: 'absolute', marginTop: -4 }}>
-          <KeyboardBackspace />
-          &nbsp;
-          Back to Dashboard
-        </Button>
         <Box sx={{ alignItems: 'center', display: 'flex', flexDirection: 'column', marginTop: 8 }}>
           <Avatar sx={{ margin: 1, backgroundColor: 'secondary' }}>
             <FitnessCenterRounded />
@@ -68,13 +59,17 @@ const GenerateWorkoutForm = ({ handleGenerateWorkout }: GenerateWorkoutFromProps
                       name='category'
                       label='Category'
                     >
-                      {exerciseCategories.map((exerciseCategory) => {
-                        return (
-                          <MenuItem key={exerciseCategory.value} value={exerciseCategory.value}>
-                            {exerciseCategory.name}
-                          </MenuItem>
-                        )
-                      })}
+                      <MenuItem key={WorkoutCategory.CHEST} value={WorkoutCategory.CHEST}>Chest</MenuItem>
+                      <MenuItem key={WorkoutCategory.BACK} value={WorkoutCategory.BACK}>Back</MenuItem>
+                      <MenuItem key={WorkoutCategory.ARMS} value={WorkoutCategory.ARMS}>Arms</MenuItem>
+                      <MenuItem key={WorkoutCategory.SHOULDERS} value={WorkoutCategory.SHOULDERS}>Shoulders</MenuItem>
+                      <MenuItem key={WorkoutCategory.LEGS} value={WorkoutCategory.LEGS}>Legs</MenuItem>
+                      <MenuItem key={WorkoutCategory.PUSH} value={WorkoutCategory.PUSH}>Push</MenuItem>
+                      <MenuItem key={WorkoutCategory.PULL} value={WorkoutCategory.PULL}>Pull</MenuItem>
+                      <MenuItem key={WorkoutCategory.UPPER} value={WorkoutCategory.UPPER}>Upper</MenuItem>
+                      <MenuItem key={WorkoutCategory.LOWER} value={WorkoutCategory.LOWER}>Lower</MenuItem>
+                      <MenuItem key={WorkoutCategory.FULL_BODY} value={WorkoutCategory.FULL_BODY}>Full Body</MenuItem>
+                      <MenuItem key={WorkoutCategory.HIIT} value={WorkoutCategory.HIIT}>HIIT</MenuItem>
                     </TextField>
                   </Grid>
                   <Grid item xs={12}>
@@ -88,26 +83,10 @@ const GenerateWorkoutForm = ({ handleGenerateWorkout }: GenerateWorkoutFromProps
                       name='length'
                       label='Length'
                     >
-                      {exerciseLengths.map((exerciseLength) => {
-                        return (
-                          <MenuItem key={exerciseLength.value} value={exerciseLength.value}>
-                            {exerciseLength.name}
-                          </MenuItem>
-                        )
-                      })}
+                      <MenuItem key={4} value={4}>Short</MenuItem>
+                      <MenuItem key={5} value={5}>Medium</MenuItem>
+                      <MenuItem key={6} value={6}>Long</MenuItem>
                     </TextField>
-                  </Grid>
-                  <Grid item xs={12} sx={{ alignItems: 'center', display: 'flex', justifyContent: 'center' }}>
-                    <FormControlLabel
-                      control={
-                        <Switch
-                          onChange={formik.handleChange}
-                          checked={formik.values.includeAbs}
-                          name='includeAbs'
-                        />
-                      }
-                      label='Include Abs'
-                    />
                   </Grid>
                 </Grid>
                 

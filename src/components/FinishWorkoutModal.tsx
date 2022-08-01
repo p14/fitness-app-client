@@ -20,7 +20,7 @@ const FinishModal = ({ handleClose }: FinishModalProps) => {
         </DialogContentText>
       </DialogContent>
       <DialogActions>
-        <Button variant='contained' onClick={() => navigate('/')}>
+        <Button variant='contained' onClick={() => navigate('/dashboard')}>
           End Workout
         </Button>
       </DialogActions>

@@ -22,7 +22,7 @@ const LoginForm: React.FC = () => {
       .then((data) => {
         setTokenStorage(data);
         sessionContext.setSession(true, data.user);
-        navigate('/');
+        navigate('/dashboard');
       })
       .catch((error: any) => {
         if (typeof error === 'object') {
@@ -59,7 +59,7 @@ const LoginForm: React.FC = () => {
 
   useEffect(() => {
     if (sessionContext.isLoggedIn) {
-      navigate('/');
+      navigate('/dashboard');
     };
   }, []);
 

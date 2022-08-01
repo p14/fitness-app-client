@@ -22,7 +22,7 @@ const RegisterForm: React.FC = () => {
       .then((data) => {
         setTokenStorage(data);
         sessionContext.setSession(true, data.user);
-        navigate('/');
+        navigate('/dashboard');
       })
       .catch((error: any) => {
         if (typeof error === 'object') {
@@ -63,7 +63,7 @@ const RegisterForm: React.FC = () => {
 
   useEffect(() => {
     if (sessionContext.isLoggedIn) {
-      navigate('/');
+      navigate('/dashboard');
     };
   }, []);
 
@@ -135,7 +135,7 @@ const RegisterForm: React.FC = () => {
                 </Button>
 
                 <Typography variant='body2'>
-                  Already have an account? <Link to='/login'>Log In</Link>
+                  Already have an account? <Link to='/'>Log In</Link>
                 </Typography>
               </Box>
             </FormControl>

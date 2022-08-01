@@ -29,12 +29,12 @@ const App: React.FC = () => {
               <Navbar />
               <Routes>
                 {/* Public Routes */}
-                <Route path='/login' element={<LoginForm />} />
+                <Route path='/' element={<LoginForm />} />
                 <Route path='/register' element={<RegisterForm />} />
 
                 {/* Private Routes */}
                 <Route element={<RequireAuth />}>
-                  <Route path='/' element={<Dashboard />} />
+                  <Route path='/dashboard' element={<Dashboard />} />
                   <Route path='/generate' element={<GenerateWorkout />} />
                   <Route path='/workouts' element={<WorkoutDashboard />} />
                   <Route path='/workouts/new' element={<WorkoutFormCreate />} />

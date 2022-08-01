@@ -3,11 +3,11 @@ import { Dialog, DialogContent, DialogTitle, Button, DialogActions, Grid, List, 
 import { useEffect, useState } from 'react';
 import { useExerciseContext } from '../../context/exercise.context';
 import { Exercise } from '../../models/exercise.model';
-import { ExerciseItem, WorkoutCategory } from '../../models/workout.model';
+import { WorkoutCategory } from '../../models/workout.model';
 import { parseExerciseCategories } from './workout.service';
 
 interface ExerciseModalProps {
-  currentExercises: ExerciseItem[]
+  currentExercises: string[]
   handleAddExercise: (exerciseId: string) => void
   category: WorkoutCategory
   handleClose: () => void
@@ -31,7 +31,7 @@ const ExerciseModal = ({ currentExercises, handleAddExercise, category, handleCl
     }
 
     const unselected = categoryExercises.filter((exercise) => {
-      return !currentExercises.find((currentExercise) => currentExercise.id === exercise._id);
+      return !currentExercises.find((currentExerciseId) => currentExerciseId === exercise._id);
     });
 
     let filtered = [...unselected];

@@ -1,5 +1,4 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
 import { PersonRounded } from '@mui/icons-material';
 import { Avatar, Box, Button, Container, createTheme, CssBaseline, ThemeProvider, Typography } from '@mui/material';
 import { logout } from '../api/auth.api';
@@ -9,8 +8,6 @@ const Dashboard: React.FC = () => {
 
   const sessionContext = useSessionContext();
   const theme = createTheme();
-
-  const navigate = useNavigate();
 
   return (
     <ThemeProvider theme={theme}>
@@ -26,18 +23,6 @@ const Dashboard: React.FC = () => {
           <Box sx={{ display: 'flex', justifyContent: 'center', marginBottom: 2, marginTop: 2 }}>
             <Button variant='contained' onClick={() => logout()}>
               Log Out
-            </Button>
-            &nbsp;
-            <Button variant='contained' onClick={() => navigate('/generate')}>
-              Generate
-            </Button>
-            &nbsp;
-            <Button variant='contained' onClick={() => navigate('/customize')}>
-              Customize
-            </Button>
-            &nbsp;
-            <Button variant='contained' onClick={() => navigate('/workouts')}>
-              Workouts
             </Button>
           </Box>
         </Box>

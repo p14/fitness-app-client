@@ -70,7 +70,7 @@ const DeleteModal = ({ id, name, type, updateContext, handleClose }: DeleteModal
       <DialogTitle>Do you want to delete {name}?</DialogTitle>
       <DialogContent>
         <Box display='flex' flexGrow={1} justifyContent='center'>
-          <Button variant='contained' onClick={handleClose}>Cancel</Button>
+          <Button color='error' variant='contained' onClick={handleClose}>Cancel</Button>
           &nbsp;
           <Button variant='contained' onClick={handleDelete}>Delete</Button>
         </Box>

@@ -12,7 +12,7 @@ const Navbar: React.FC = () => {
   return (
     <AppBar position='static'>
       <Toolbar sx={{ alignSelf: 'center', maxWidth: '1200px', width: '100%' }}>
-        <Typography variant='h6' sx={{ cursor: 'pointer', flexGrow: 1, fontWeight: 600 }} onClick={() => navigate('/')}>
+        <Typography variant='h6' sx={{ cursor: 'pointer', flexGrow: 1, fontWeight: 600 }} onClick={() => navigate('/dashboard')}>
           EveryManJacked
         </Typography>
         {sessionContext.isLoggedIn &&
@@ -20,8 +20,11 @@ const Navbar: React.FC = () => {
             <Button color='inherit' onClick={() => navigate('/generate')}>
               Generate
             </Button>
-            <Button color='inherit' onClick={() => navigate('/customize')}>
-              Customize
+            <Button color='inherit' onClick={() => navigate('/workouts')}>
+              Workouts
+            </Button>
+            <Button color='inherit' onClick={() => navigate('/dashboard')}>
+              Dashboard
             </Button>
           </>
         }
