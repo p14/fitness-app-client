@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Box, Container, createTheme, CssBaseline, LinearProgress, ThemeProvider } from '@mui/material';
-import { useWorkoutContext } from '../../context/workout.context';
 import { useFeedbackContext } from '../../context/feedback.context';
-import { Workout } from '../../models/workout.model';
-import { initialWorkoutData } from './workout.service';
+import { useWorkoutContext } from '../../context/workout.context';
+import { initialWorkoutData, Workout } from '../../models/workout.model';
 import WorkoutForm from './WorkoutForm';
 
 const WorkoutEditor: React.FC = () => {

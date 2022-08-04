@@ -1,4 +1,4 @@
-import { Dialog, DialogContent, DialogTitle, Button, DialogActions, DialogContentText } from '@mui/material';
+import { Button, Dialog, DialogContent, DialogTitle, DialogActions, DialogContentText } from '@mui/material';
 
 interface DeleteModalProps {
   handleChangeCategory: () => void

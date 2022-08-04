@@ -6,7 +6,6 @@ import { useSessionContext } from '../context/session.context';
 const Navbar: React.FC = () => {
 
   const sessionContext = useSessionContext();
-
   const navigate = useNavigate();
 
   return (

@@ -1,8 +1,10 @@
-export interface Exercise {
-  _id?: string
-  title: string
-  categories: string[]
-  variants?: string[]
+export enum BaseExerciseCategory {
+  CHEST = 'CHEST',
+  BACK = 'BACK',
+  ARMS = 'ARMS',
+  SHOULDERS = 'SHOULDERS',
+  LEGS = 'LEGS',
+  HIIT = 'HIIT',
 }
 
 export enum ExerciseCategory {
@@ -18,11 +20,9 @@ export enum ExerciseCategory {
   HIIT = 'HIIT',
 }
 
-export enum BaseExerciseCategory {
-  CHEST = 'CHEST',
-  BACK = 'BACK',
-  ARMS = 'ARMS',
-  SHOULDERS = 'SHOULDERS',
-  LEGS = 'LEGS',
-  HIIT = 'HIIT',
+export interface Exercise {
+  _id: string
+  title: string
+  categories: string[]
+  variants?: string[]
 }

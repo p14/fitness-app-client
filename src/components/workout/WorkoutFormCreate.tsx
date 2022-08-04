@@ -4,16 +4,16 @@ import { Delete, FitnessCenterRounded, KeyboardBackspace } from '@mui/icons-mate
 import { Avatar, Box, Button, Container, createTheme, CssBaseline, Divider, FormControl, Grid, IconButton, List, ListItem, ListItemText, MenuItem, TextField, ThemeProvider, Typography } from '@mui/material';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
+import { refresh } from '../../api/auth.api';
 import { useExerciseContext } from '../../context/exercise.context';
 import { useFeedbackContext } from '../../context/feedback.context';
 import { useSessionContext } from '../../context/session.context';
 import { useWorkoutContext } from '../../context/workout.context';
-import { Workout, WorkoutCategory } from '../../models/workout.model';
-import ExerciseModal from './ExerciseModal';
-import { createWorkout, parseWorkout, initialWorkoutData, saveWorkoutToUser, parseExerciseCategories } from './workout.service';
 import { Exercise } from '../../models/exercise.model';
+import { initialWorkoutData, Workout, WorkoutCategory } from '../../models/workout.model';
 import ConfirmationModal from './ConfirmationModal';
-import { refresh } from '../../api/auth.api';
+import ExerciseModal from './ExerciseModal';
+import { createWorkout, parseWorkout, saveWorkoutToUser, parseExerciseCategories } from './workout.service';
 
 const WorkoutFormCreate: React.FC = () => {
 
@@ -22,12 +22,11 @@ const WorkoutFormCreate: React.FC = () => {
   const feedbackContext = useFeedbackContext();
   const sessionContext = useSessionContext();
   const workoutContext = useWorkoutContext();
+  const navigate = useNavigate();
 
   const [confirmationCategory, setConfirmationCategory] = useState<WorkoutCategory>();
   const [openConfirmationModal, setOpenConfirmationModal] = useState<boolean>(false);
   const [openExerciseModal, setOpenExerciseModal] = useState<boolean>(false);
-
-  const navigate = useNavigate();
 
   const handleSetWorkout = (newWorkout: Workout) => {
     const updatedWorkouts = [...workoutContext.workouts];
@@ -48,14 +47,13 @@ const WorkoutFormCreate: React.FC = () => {
   };
 
   const handleCreateWorkout = (workout: Workout) => {
-    console.log('saving')
     createWorkout(workout)
       .then((response) => response.data)
       .then((data) => {
         const workoutData = parseWorkout(data);
         handleSetWorkout(workoutData);
-        handleSetUserWorkout(workoutData._id!);
-        saveWorkoutToUser(sessionContext.user, workoutData._id!)
+        handleSetUserWorkout(workoutData._id);
+        saveWorkoutToUser(sessionContext.user, workoutData._id)
           .then(() => {
             refresh();
             feedbackContext.setFeedback({
@@ -66,35 +64,19 @@ const WorkoutFormCreate: React.FC = () => {
             navigate(`/workouts/${workoutData._id}/edit`);
           })
           .catch((error) => {
-            if (typeof error === 'object') {
-              feedbackContext.setFeedback({
-                message: error.response.data ?? error.message, 
-                error: true,
-                open: true,
-              });
-            } else {
-              feedbackContext.setFeedback({
-                message: error, 
-                error: true,
-                open: true,
-              });
-            }
+            feedbackContext.setFeedback({
+              message: error, 
+              error: true,
+              open: true,
+            });
           });
       })
       .catch((error) => {
-        if (typeof error === 'object') {
-          feedbackContext.setFeedback({
-            message: error.response.data ?? error.message, 
-            error: true,
-            open: true,
-          });
-        } else {
-          feedbackContext.setFeedback({
-            message: error, 
-            error: true,
-            open: true,
-          });
-        }
+        feedbackContext.setFeedback({
+          message: error, 
+          error: true,
+          open: true,
+        });
       });
   };
 
@@ -107,21 +89,18 @@ const WorkoutFormCreate: React.FC = () => {
   const formik = useFormik({
     initialValues: initialWorkoutData,
     validationSchema,
-    onSubmit: (values: Workout) => {
-      console.log('save', values);
-      handleCreateWorkout(values);
-    }
+    onSubmit: (values: Workout) => handleCreateWorkout(values),
   });
 
-  const handleAddExercise = (exerciseId: string) => {
+  const handleAddExercise = (id: string) => {
     const updatedExercises = [...formik.values.exercises];
-    updatedExercises.push(exerciseId);
+    updatedExercises.push(id);
     formik.setFieldValue('exercises', updatedExercises);
   };
 
-  const handleRemoveExercise = (exerciseId: string) => {
+  const handleRemoveExercise = (id: string) => {
     const updatedExercises = [...formik.values.exercises];
-    const index = updatedExercises.findIndex((updatedExerciseId) => updatedExerciseId === exerciseId);
+    const index = updatedExercises.findIndex((exerciseId) => exerciseId === id);
     if (index >= 0) {
       updatedExercises.splice(index, 1);
     }
@@ -139,16 +118,9 @@ const WorkoutFormCreate: React.FC = () => {
     setOpenConfirmationModal(false);
   };
 
-  const readExerciseById = (exerciseId: string): Exercise => {
-    const exerciseData = exerciseContext.exercises.find((exercise) => exercise._id === exerciseId);
-    if (exerciseData) {
-      return exerciseData;
-    }
-
-    return {
-      title: '',
-      categories: [],
-    } as Exercise;
+  const readExerciseById = (id: string): Exercise => {
+    const [exerciseData] = exerciseContext.exercises.filter((exercise) => exercise._id === id);
+    return exerciseData;
   };
 
   return (

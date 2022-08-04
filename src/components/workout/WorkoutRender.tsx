@@ -1,14 +1,14 @@
+import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Check, FitnessCenterRounded, KeyboardBackspace, Undo } from '@mui/icons-material';
 import { Avatar, Box, Button, Container, createTheme, CssBaseline, Divider, Grid, IconButton, LinearProgress, List, ListItem, ListItemText, ThemeProvider, Typography } from '@mui/material';
-import { Workout } from '../../models/workout.model';
-import { initialWorkoutData, parseExerciseCategories } from './workout.service';
 import { useExerciseContext } from '../../context/exercise.context';
-import { Exercise } from '../../models/exercise.model';
-import { useEffect, useState } from 'react';
-import { useWorkoutContext } from '../../context/workout.context';
 import { useFeedbackContext } from '../../context/feedback.context';
+import { useWorkoutContext } from '../../context/workout.context';
+import { Exercise } from '../../models/exercise.model';
+import { initialWorkoutData, Workout } from '../../models/workout.model';
 import FinishWorkoutModal from '../FinishWorkoutModal';
+import { parseExerciseCategories } from './workout.service';
 
 const WorkoutRender = () => {
 
@@ -25,27 +25,20 @@ const WorkoutRender = () => {
   const [workout, setWorkout] = useState<Workout>(initialWorkoutData);
   const [loading, setLoading] = useState<Boolean>(true);
 
-  const handleCompleteToggle = (exerciseId: string) => {
+  const handleCompleteToggle = (id: string) => {
     const updatedCompletedExercises = [...completedExercises];
-    const index = updatedCompletedExercises.findIndex((exercises) => exercises === exerciseId);
+    const index = updatedCompletedExercises.findIndex((exerciseId) => exerciseId === id);
     if (index >= 0) {
       updatedCompletedExercises.splice(index, 1);
     } else {
-      updatedCompletedExercises.push(exerciseId);
+      updatedCompletedExercises.push(id);
     }
     setCompletedExercises(updatedCompletedExercises);
   };
 
-  const readExerciseById = (exerciseId: string): Exercise => {
-    const exerciseData = exerciseContext.exercises.find((exercise) => exercise._id === exerciseId);
-    if (exerciseData) {
-      return exerciseData;
-    }
-
-    return {
-      title: '',
-      categories: [],
-    } as Exercise;
+  const readExerciseById = (id: string): Exercise => {
+    const [exerciseData] = exerciseContext.exercises.filter((exercise) => exercise._id === id);
+    return exerciseData;
   };
 
   useEffect(() => {

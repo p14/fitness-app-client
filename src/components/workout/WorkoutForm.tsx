@@ -1,14 +1,14 @@
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Delete, FitnessCenterRounded, KeyboardBackspace } from '@mui/icons-material';
 import { Avatar, Box, Button, Container, createTheme, CssBaseline, Divider, FormControl, Grid, IconButton, List, ListItem, ListItemText, MenuItem, TextField, ThemeProvider, Typography } from '@mui/material';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
+import { useExerciseContext } from '../../context/exercise.context';
 import { useFeedbackContext } from '../../context/feedback.context';
+import { Exercise } from '../../models/exercise.model';
 import { Workout, WorkoutCategory } from '../../models/workout.model';
 import { parseExerciseCategories, parseWorkout, updateWorkout } from './workout.service';
-import { useExerciseContext } from '../../context/exercise.context';
-import { useState } from 'react';
-import { Exercise } from '../../models/exercise.model';
 import ConfirmationModal from './ConfirmationModal';
 import ExerciseModal from './ExerciseModal';
 
@@ -43,35 +43,24 @@ const WorkoutForm = ({ id, workout, handleSetWorkout }: WorkoutFormProps) => {
       });
     })
     .catch((error) => {
-      if (typeof error === 'object') {
-        feedbackContext.setFeedback({
-          message: error.response.data ?? error.message, 
-          error: true,
-          open: true,
-        });
-      } else {
-        feedbackContext.setFeedback({
-          message: error, 
-          error: true,
-          open: true,
-        });
-      }
+      feedbackContext.setFeedback({
+        message: error, 
+        error: true,
+        open: true,
+      });
     });
   };
 
   const validationSchema = Yup.object().shape({
     title: Yup.string().required(),
     category: Yup.string().oneOf(Object.values(WorkoutCategory)).required(),
-    exercises: Yup.array(),
-    // exercises: Yup.array().of(Yup.string()),
+    exercises: Yup.array().of(Yup.string()),
   });
 
   const formik = useFormik({
     initialValues: workout,
     validationSchema,
-    onSubmit: (values: Workout) => {
-      handleUpdateWorkout(values);
-    }
+    onSubmit: (values: Workout) => handleUpdateWorkout(values),
   });
 
   const handleAddExercise = (exerciseId: string) => {
@@ -101,15 +90,8 @@ const WorkoutForm = ({ id, workout, handleSetWorkout }: WorkoutFormProps) => {
   };
 
   const readExerciseById = (exerciseId: string): Exercise => {
-    const exerciseData = exerciseContext.exercises.find((exercise) => exercise._id === exerciseId);
-    if (exerciseData) {
-      return exerciseData;
-    }
-
-    return {
-      title: '',
-      categories: [],
-    } as Exercise;
+    const [exerciseData] = exerciseContext.exercises.filter((exercise) => exercise._id === exerciseId);
+    return exerciseData;
   };
 
   return (

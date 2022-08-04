@@ -1,27 +1,8 @@
 import { Dialog, DialogContent, DialogTitle, Box, Button } from '@mui/material';
-import axios, { AxiosRequestConfig } from 'axios';
-import { isTokenExpired, refresh } from '../api/auth.api';
+import axios from 'axios';
 import { useFeedbackContext } from '../context/feedback.context';
 import { DataType } from '../models/data.model';
-import { capitalize } from '../utils/helpers';
-
-const setupConfig = async (method: string, url: string): Promise<AxiosRequestConfig> => {
-  let accessToken = String(localStorage.getItem('AccessToken'));
-  if (isTokenExpired(accessToken)) {
-    accessToken = await refresh();
-  }
-
-  return {
-    method,
-    url: process.env.REACT_APP_API_URL + url,
-    headers: {
-      'Content-Type': 'application/json',
-      'Access-Control-Allow-Credentials': 'true',
-      'Access-Control-Allow-Origin': '*',
-      'Authorization': accessToken,
-    },
-  }
-};
+import { capitalize, setupConfig } from '../utils/helpers';
 
 interface DeleteModalProps {
   id: string
@@ -48,20 +29,11 @@ const DeleteModal = ({ id, name, type, updateContext, handleClose }: DeleteModal
         handleClose();
       })
       .catch((error) => {
-        console.error(error);
-        if (typeof error === 'object') {
-          feedbackContext.setFeedback({
-            message: error.response.data.message ?? error.message, 
-            error: true,
-            open: true,
-          });
-        } else {
-          feedbackContext.setFeedback({
-            message: error, 
-            error: true,
-            open: true,
-          });
-        }
+        feedbackContext.setFeedback({
+          message: error, 
+          error: true,
+          open: true,
+        });
       });
   };
 

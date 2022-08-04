@@ -2,13 +2,12 @@ import { FitnessCenterRounded } from '@mui/icons-material';
 import { Avatar, Box, Button, Container, createTheme, CssBaseline, FormControl, Grid, MenuItem, TextField, ThemeProvider, Typography } from '@mui/material';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
-import { WorkoutCategory } from '../../models/workout.model';
+import { GenerateWorkoutData, initialGenerateWorkoutData, WorkoutCategory } from '../../models/workout.model';
 
 interface GenerateWorkoutFromProps {
-  handleGenerateWorkout: ({ category, length, includeAbs }: {
+  handleGenerateWorkout: ({ category, length }: {
     category: string;
-    length: string;
-    includeAbs: boolean;
+    length: number;
   }) => Promise<void>
 }
 
@@ -22,14 +21,9 @@ const GenerateWorkoutForm = ({ handleGenerateWorkout }: GenerateWorkoutFromProps
   });
 
   const formik = useFormik({
-    initialValues: {
-      category: WorkoutCategory.CHEST,
-      length: 4,
-    },
+    initialValues: initialGenerateWorkoutData,
     validationSchema,
-    onSubmit: (values: any) => {
-      handleGenerateWorkout(values);
-    }
+    onSubmit: (values: GenerateWorkoutData) => handleGenerateWorkout(values),
   });
 
   return (

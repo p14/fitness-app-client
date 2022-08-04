@@ -16,8 +16,8 @@ const GenerateWorkout: React.FC = () => {
   const [ openWorkout, setOpenWorkout ] = React.useState<boolean>(false);
   const [ openModal, setOpenModal ] = React.useState<boolean>(false);
 
-  const handleGenerateWorkout = async ({ category, length, includeAbs }: { category: string, length: string, includeAbs: boolean }) => {
-    const workout = await generateWorkout( category, length, includeAbs, exerciseContext.exercises );
+  const handleGenerateWorkout = async ({ category, length }: { category: string, length: number }) => {
+    const workout = await generateWorkout( category, length, exerciseContext.exercises );
 
     setWorkout(workout);
     setCategory(category);

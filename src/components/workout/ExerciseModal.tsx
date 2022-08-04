@@ -1,6 +1,6 @@
-import { Add } from '@mui/icons-material';
-import { Dialog, DialogContent, DialogTitle, Button, DialogActions, Grid, List, Divider, ListItem, IconButton, ListItemText, Box, TextField } from '@mui/material';
 import { useEffect, useState } from 'react';
+import { Add } from '@mui/icons-material';
+import { Button, Dialog, DialogContent, DialogTitle, DialogActions, Grid, List, Divider, ListItem, IconButton, ListItemText, Box, TextField } from '@mui/material';
 import { useExerciseContext } from '../../context/exercise.context';
 import { Exercise } from '../../models/exercise.model';
 import { WorkoutCategory } from '../../models/workout.model';
@@ -70,7 +70,7 @@ const ExerciseModal = ({ currentExercises, handleAddExercise, category, handleCl
                 <Box key={exercise._id}>
                   <ListItem
                     secondaryAction={
-                      <IconButton edge='end' onClick={() => handleAddExercise(exercise._id!)}>
+                      <IconButton edge='end' onClick={() => handleAddExercise(exercise._id)}>
                         <Add />
                       </IconButton>
                     }

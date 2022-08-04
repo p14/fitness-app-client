@@ -3,14 +3,14 @@ import { useNavigate } from 'react-router-dom';
 import { Delete, Edit, PlayArrow } from '@mui/icons-material';
 import { IconButton } from '@mui/material';
 import { GridColDef } from '@mui/x-data-grid';
+import { refresh } from '../../api/auth.api';
+import { useFeedbackContext } from '../../context/feedback.context';
+import { useSessionContext } from '../../context/session.context';
 import { useWorkoutContext } from '../../context/workout.context';
 import { DataType } from '../../models/data.model';
 import DataTable from '../DataTable';
 import DeleteModal from '../DeleteModal';
-import { useSessionContext } from '../../context/session.context';
 import { removeWorkoutFromUser } from './workout.service';
-import { refresh } from '../../api/auth.api';
-import { useFeedbackContext } from '../../context/feedback.context';
 
 const WorkoutDataTable: React.FC = () => {
 

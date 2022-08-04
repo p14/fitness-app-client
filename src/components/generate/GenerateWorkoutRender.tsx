@@ -1,6 +1,6 @@
+import { useState } from 'react';
 import { Check, FitnessCenterRounded, Undo } from '@mui/icons-material';
 import { Avatar, Box, Button, Container, createTheme, CssBaseline, Divider, Grid, IconButton, List, ListItem, ListItemText, ThemeProvider, Typography } from '@mui/material';
-import { useState } from 'react';
 import { Exercise } from '../../models/exercise.model';
 import { capitalize } from '../../utils/helpers';
 import { parseExerciseCategories } from '../workout/workout.service';
@@ -47,13 +47,13 @@ const GenerateWorkoutRender = ({ workout, category, setOpenModal }: GenerateWork
                   <Box key={exercise._id}>
                     <ListItem
                       secondaryAction={
-                        <IconButton edge='end' onClick={() => handleCompleteToggle(exercise._id!)}>
-                          {completedExercises.includes(exercise._id!) ? <Undo /> : <Check /> }
+                        <IconButton edge='end' onClick={() => handleCompleteToggle(exercise._id)}>
+                          {completedExercises.includes(exercise._id) ? <Undo /> : <Check /> }
                         </IconButton>
                       }
                     >
                       <ListItemText
-                        sx={{ textDecoration: completedExercises.includes(exercise._id!) ? 'line-through' : 'none' }}
+                        sx={{ textDecoration: completedExercises.includes(exercise._id) ? 'line-through' : 'none' }}
                         primary={exercise.title}
                         secondary={parseExerciseCategories(exercise.categories)}
                       />

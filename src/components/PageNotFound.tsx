@@ -6,7 +6,6 @@ import { Avatar, Box, Button, Container, createTheme, CssBaseline, ThemeProvider
 const PageNotFound: React.FC = () => {
 
   const theme = createTheme();
-
   const navigate = useNavigate();
 
   return (

@@ -13,3 +13,15 @@ export interface RegisterData {
   email: string
   password: string
 }
+
+export const initialLoginData = {
+  email: '',
+  password: '',
+}
+
+export const initialRegisterData = {
+  firstName: '',
+  lastName: '',
+  email: '',
+  password: '',
+}

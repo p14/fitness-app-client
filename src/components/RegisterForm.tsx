@@ -7,7 +7,7 @@ import * as Yup from 'yup';
 import { register, setTokenStorage } from '../api/auth.api';
 import { useFeedbackContext } from '../context/feedback.context';
 import { useSessionContext } from '../context/session.context';
-import { RegisterData } from '../models/auth.model';
+import { initialRegisterData, RegisterData } from '../models/auth.model';
 
 const RegisterForm: React.FC = () => {
 
@@ -16,8 +16,8 @@ const RegisterForm: React.FC = () => {
   const feedbackContext = useFeedbackContext();
   const navigate = useNavigate();
 
-  const handleRegister = (user: RegisterData) => {
-    register(user)
+  const handleRegister = (registerData: RegisterData) => {
+    register(registerData)
       .then((response) => response.data)
       .then((data) => {
         setTokenStorage(data);
@@ -49,16 +49,9 @@ const RegisterForm: React.FC = () => {
   });
 
   const formik = useFormik({
-    initialValues: {
-      firstName: '',
-      lastName: '',
-      email: '',
-      password: '',
-    },
+    initialValues: initialRegisterData,
     validationSchema,
-    onSubmit: (values: RegisterData) => {
-      handleRegister(values);
-    }
+    onSubmit: (values: RegisterData) => handleRegister(values),
   });
 
   useEffect(() => {

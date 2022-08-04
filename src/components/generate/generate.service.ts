@@ -2,8 +2,8 @@ import { Exercise } from '../../models/exercise.model';
 import { WorkoutCategory } from '../../models/workout.model';
 import { shuffle } from '../../utils/helpers';
 
-export const generateWorkout = async (category: string, length: string, includeAbs: boolean, exercises: Exercise[]) => {
-  const allExercises = [...exercises];
+export const generateWorkout = async (category: string, length: number, exercises: Exercise[]) => {
+  const allExercises: Exercise[] = [...exercises];
   const filteredExercises: Exercise[] = [];
   
   allExercises.forEach((exercise) => {
@@ -64,17 +64,17 @@ export const generateWorkout = async (category: string, length: string, includeA
     ]);
 
     const shuffledExercises = [ ...shuffledPrimaryExercises, ...shuffledSecondaryExercises ];
-    const workout = shuffledExercises.slice(0, Number(length));
+    const workout = shuffledExercises.slice(0, length);
 
     return workout;
   } else if (category === WorkoutCategory.HIIT) {
     const shuffledExercises: Exercise[] = shuffle(filteredExercises);
-    const workout = shuffledExercises.slice(0, (Number(length) + 2));
+    const workout = shuffledExercises.slice(0, (length + 2));
 
     return workout;
   } else {
     const shuffledExercises: Exercise[] = shuffle(filteredExercises);
-    const workout = shuffledExercises.slice(0, Number(length));
+    const workout = shuffledExercises.slice(0, length);
 
     return workout;
   }

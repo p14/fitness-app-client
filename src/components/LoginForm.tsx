@@ -7,7 +7,7 @@ import * as Yup from 'yup';
 import { login, setTokenStorage } from '../api/auth.api';
 import { useFeedbackContext } from '../context/feedback.context';
 import { useSessionContext } from '../context/session.context';
-import { LoginData } from '../models/auth.model';
+import { initialLoginData, LoginData } from '../models/auth.model';
 
 const LoginForm: React.FC = () => {
 
@@ -16,8 +16,8 @@ const LoginForm: React.FC = () => {
   const feedbackContext = useFeedbackContext();
   const navigate = useNavigate();
 
-  const handleLogin = (email: string, password: string) => {
-    login(email, password)
+  const handleLogin = (loginData: LoginData) => {
+    login(loginData)
       .then((response) => response.data)
       .then((data) => {
         setTokenStorage(data);
@@ -25,19 +25,11 @@ const LoginForm: React.FC = () => {
         navigate('/dashboard');
       })
       .catch((error: any) => {
-        if (typeof error === 'object') {
-          feedbackContext.setFeedback({
-            message: error.response.data ?? error.message, 
-            error: true,
-            open: true,
-          });
-        } else {
-          feedbackContext.setFeedback({
-            message: error, 
-            error: true,
-            open: true,
-          });
-        }
+        feedbackContext.setFeedback({
+          message: error, 
+          error: true,
+          open: true,
+        });
       });
   };
 
@@ -47,14 +39,9 @@ const LoginForm: React.FC = () => {
   });
 
   const formik = useFormik({
-    initialValues: {
-      email: '',
-      password: '',
-    },
+    initialValues: initialLoginData,
     validationSchema,
-    onSubmit: (values: LoginData) => {
-      handleLogin(values.email, values.password);
-    }
+    onSubmit: (values: LoginData) => handleLogin(values),
   });
 
   useEffect(() => {
