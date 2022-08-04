@@ -4,16 +4,6 @@ Every Man Jacked is a workout tool that helps users structure their own workouts
 
 This application is built using TypeScript and React for a quick and concise experience.
 
-### Upcoming Features
-
-- [ ] UI / UX redesign
-- [ ] User authentication
-- [ ] Exercise log
-- [ ] User messenger
-- [ ] Coaching role / support
-- [ ] Multi-language Support
-  - [ ] Spanish
-
 ## Available Scripts
 
 In the project directory, you can run:
