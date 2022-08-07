@@ -1,6 +1,8 @@
 import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
 import jwt_decode from 'jwt-decode';
 import { LoginData, RegisterData, TokenData } from '../models/auth.model';
+import { User } from '../models/user.model';
+import { setupConfig } from '../utils/helpers';
 
 export const setupAuthConfig = (method: string, url: string, data: any): AxiosRequestConfig => {
   return {
@@ -45,6 +47,11 @@ export const register = (registerData: RegisterData): Promise<AxiosResponse> => 
   const config = setupAuthConfig('POST', '/account/register', registerData);
   return axios.request(config);
 };
+
+export const updateUser = async (userData: User): Promise<AxiosResponse> => {
+  const config = await setupConfig('PUT', `/users/${userData._id}`, userData);
+  return axios.request(config);
+}
 
 export const logout = (): void => {
   clearTokenStorage();

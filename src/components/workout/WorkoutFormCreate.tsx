@@ -63,20 +63,36 @@ const WorkoutFormCreate: React.FC = () => {
             });
             navigate(`/workouts/${workoutData._id}/edit`);
           })
-          .catch((error) => {
-            feedbackContext.setFeedback({
-              message: error, 
-              error: true,
-              open: true,
-            });
+          .catch((error: any) => {
+            if (typeof error === 'object') {
+              feedbackContext.setFeedback({
+                message: error.response.data ?? error.message, 
+                error: true,
+                open: true,
+              });
+            } else {
+              feedbackContext.setFeedback({
+                message: error, 
+                error: true,
+                open: true,
+              });
+            }
           });
       })
-      .catch((error) => {
-        feedbackContext.setFeedback({
-          message: error, 
-          error: true,
-          open: true,
-        });
+      .catch((error: any) => {
+        if (typeof error === 'object') {
+          feedbackContext.setFeedback({
+            message: error.response.data ?? error.message, 
+            error: true,
+            open: true,
+          });
+        } else {
+          feedbackContext.setFeedback({
+            message: error, 
+            error: true,
+            open: true,
+          });
+        }
       });
   };
 

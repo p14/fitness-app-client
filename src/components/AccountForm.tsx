@@ -1,28 +1,30 @@
-import React, { useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { LockOutlined } from '@mui/icons-material';
+import React from 'react';
+import { PersonRounded } from '@mui/icons-material';
 import { Avatar, Box, Button, Container, createTheme, CssBaseline, FormControl, Grid, TextField, ThemeProvider, Typography } from '@mui/material';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
-import { login, setTokenStorage } from '../api/auth.api';
+import { refresh, updateUser } from '../api/auth.api';
 import { useFeedbackContext } from '../context/feedback.context';
 import { useSessionContext } from '../context/session.context';
-import { initialLoginData, LoginData } from '../models/auth.model';
+import { User } from '../models/user.model';
 
-const LoginForm: React.FC = () => {
+const AccountForm: React.FC = () => {
 
   const theme = createTheme();
   const sessionContext = useSessionContext();
   const feedbackContext = useFeedbackContext();
-  const navigate = useNavigate();
 
-  const handleLogin = (loginData: LoginData) => {
-    login(loginData)
+  const handleRegister = (userData: User) => {
+    updateUser(userData)
       .then((response) => response.data)
       .then((data) => {
-        setTokenStorage(data);
-        sessionContext.setSession(true, data.user);
-        navigate('/dashboard');
+        sessionContext.setSession(true, data);
+        refresh();
+        feedbackContext.setFeedback({
+          message: 'Account Updated!', 
+          error: false,
+          open: true,
+        });
       })
       .catch((error: any) => {
         if (typeof error === 'object') {
@@ -42,21 +44,17 @@ const LoginForm: React.FC = () => {
   };
 
   const validationSchema = Yup.object().shape({
+    firstName: Yup.string().required(),
+    lastName: Yup.string().required(),
     email: Yup.string().email('Invalid email address').required(),
     password: Yup.string().required(),
   });
 
   const formik = useFormik({
-    initialValues: initialLoginData,
+    initialValues: { ...sessionContext.user, password: '' },
     validationSchema,
-    onSubmit: (values: LoginData) => handleLogin(values),
+    onSubmit: (values: User) => handleRegister(values),
   });
-
-  useEffect(() => {
-    if (sessionContext.isLoggedIn) {
-      navigate('/dashboard');
-    };
-  }, []);
 
   return (
     <ThemeProvider theme={theme}>
@@ -64,16 +62,38 @@ const LoginForm: React.FC = () => {
         <CssBaseline />
         <Box sx={{ alignItems: 'center', display: 'flex', flexDirection: 'column', marginTop: 8 }}>
           <Avatar sx={{ margin: 1, backgroundColor: 'secondary' }}>
-            <LockOutlined />
+            <PersonRounded />
           </Avatar>
           <Typography component='h1' variant='h5'>
-            User Login
+            Edit Account
           </Typography>
 
           <Container component='main' maxWidth='sm'>
             <FormControl fullWidth>
               <Box component='form' onSubmit={formik.handleSubmit} sx={{ marginTop: 3 }}>
                 <Grid container spacing={2}>
+                  <Grid item xs={12}>
+                    <TextField
+                      fullWidth
+                      value={formik.values.firstName}
+                      onChange={formik.handleChange}
+                      error={formik.touched.firstName && Boolean(formik.errors.firstName)}
+                      helperText={formik.touched.firstName && formik.errors.firstName}
+                      name='firstName'
+                      label='First Name'
+                    />
+                  </Grid>
+                  <Grid item xs={12}>
+                    <TextField
+                      fullWidth
+                      value={formik.values.lastName}
+                      onChange={formik.handleChange}
+                      error={formik.touched.lastName && Boolean(formik.errors.lastName)}
+                      helperText={formik.touched.lastName && formik.errors.lastName}
+                      name='lastName'
+                      label='Last Name'
+                    />
+                  </Grid>
                   <Grid item xs={12}>
                     <TextField
                       fullWidth
@@ -99,13 +119,9 @@ const LoginForm: React.FC = () => {
                   </Grid>
                 </Grid>
 
-                <Button fullWidth type='submit' variant='contained' sx={{ marginBottom: 2, marginTop: 2 }}>
-                  Log In
+                <Button type='submit' variant='contained' sx={{ marginBottom: 2, marginTop: 2 }}>
+                  Save
                 </Button>
-
-                <Typography variant='body2'>
-                  Don't have an account? <Link to='/register'>Register</Link>
-                </Typography>
               </Box>
             </FormControl>
           </Container>
@@ -115,4 +131,4 @@ const LoginForm: React.FC = () => {
   );
 }
 
-export default LoginForm;
+export default AccountForm;

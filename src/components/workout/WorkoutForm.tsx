@@ -39,12 +39,20 @@ const WorkoutForm = ({ id, workout, handleSetWorkout }: WorkoutFormProps) => {
         type: 0
       });
     })
-    .catch((error) => {
-      feedbackContext.setFeedback({
-        message: error, 
-        error: true,
-        open: true,
-      });
+    .catch((error: any) => {
+      if (typeof error === 'object') {
+        feedbackContext.setFeedback({
+          message: error.response.data ?? error.message, 
+          error: true,
+          open: true,
+        });
+      } else {
+        feedbackContext.setFeedback({
+          message: error, 
+          error: true,
+          open: true,
+        });
+      }
     });
   };
 
@@ -100,7 +108,7 @@ const WorkoutForm = ({ id, workout, handleSetWorkout }: WorkoutFormProps) => {
             <FitnessCenterRounded />
           </Avatar>
           <Typography component='h1' variant='h5'>
-            Create Workout
+            Edit Workout
           </Typography>
 
           <FormControl fullWidth>
@@ -127,7 +135,6 @@ const WorkoutForm = ({ id, workout, handleSetWorkout }: WorkoutFormProps) => {
                       setConfirmationCategory(e.target.value as WorkoutCategory);
                       setOpenConfirmationModal(true);
                     }}
-                    // onChange={formik.handleChange}
                     error={formik.touched.category && Boolean(formik.errors.category)}
                     helperText={formik.touched.category && formik.errors.category}
                     name='category'
