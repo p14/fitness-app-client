@@ -10,7 +10,7 @@ import { useFeedbackContext } from '../../context/feedback.context';
 import { useSessionContext } from '../../context/session.context';
 import { useWorkoutContext } from '../../context/workout.context';
 import { Exercise } from '../../models/exercise.model';
-import { initialWorkoutData, Workout, WorkoutCategory } from '../../models/workout.model';
+import { initialWorkoutData, NewWorkout, Workout, WorkoutCategory } from '../../models/workout.model';
 import ConfirmationModal from './ConfirmationModal';
 import ExerciseModal from './ExerciseModal';
 import { createWorkout, parseWorkout, saveWorkoutToUser, parseExerciseCategories } from './workout.service';
@@ -46,7 +46,7 @@ const WorkoutFormCreate: React.FC = () => {
     );
   };
 
-  const handleCreateWorkout = (workout: Workout) => {
+  const handleCreateWorkout = (workout: NewWorkout) => {
     createWorkout(workout)
       .then((response) => response.data)
       .then((data) => {
@@ -89,7 +89,7 @@ const WorkoutFormCreate: React.FC = () => {
   const formik = useFormik({
     initialValues: initialWorkoutData,
     validationSchema,
-    onSubmit: (values: Workout) => handleCreateWorkout(values),
+    onSubmit: (values: NewWorkout) => handleCreateWorkout(values),
   });
 
   const handleAddExercise = (id: string) => {

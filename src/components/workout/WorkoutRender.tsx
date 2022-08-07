@@ -6,7 +6,7 @@ import { useExerciseContext } from '../../context/exercise.context';
 import { useFeedbackContext } from '../../context/feedback.context';
 import { useWorkoutContext } from '../../context/workout.context';
 import { Exercise } from '../../models/exercise.model';
-import { initialWorkoutData, Workout } from '../../models/workout.model';
+import { initialWorkoutRender, Workout } from '../../models/workout.model';
 import FinishWorkoutModal from '../FinishWorkoutModal';
 import { parseExerciseCategories } from './workout.service';
 
@@ -22,7 +22,7 @@ const WorkoutRender = () => {
 
   const [completedExercises, setCompletedExercises] = useState<string[]>([]);
   const [openModal, setOpenModal] = useState<boolean>(false);
-  const [workout, setWorkout] = useState<Workout>(initialWorkoutData);
+  const [workout, setWorkout] = useState<Workout>(initialWorkoutRender);
   const [loading, setLoading] = useState<Boolean>(true);
 
   const handleCompleteToggle = (id: string) => {

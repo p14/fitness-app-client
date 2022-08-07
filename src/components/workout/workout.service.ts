@@ -1,10 +1,10 @@
 import axios, { AxiosResponse } from 'axios';
 import { BaseExerciseCategory } from '../../models/exercise.model';
 import { User } from '../../models/user.model';
-import { Workout } from '../../models/workout.model';
+import { NewWorkout, Workout } from '../../models/workout.model';
 import { setupConfig } from '../../utils/helpers';
 
-export const createWorkout = async (workout: Workout): Promise<AxiosResponse> => {
+export const createWorkout = async (workout: NewWorkout): Promise<AxiosResponse> => {
   const config = await setupConfig('POST', '/workouts', workout);
   return axios.request(config);
 };

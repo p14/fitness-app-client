@@ -13,7 +13,13 @@ export enum WorkoutCategory {
 }
 
 export interface Workout {
-  _id?: string
+  _id: string
+  title: string
+  category: WorkoutCategory
+  exercises: string[]
+}
+
+export interface NewWorkout {
   title: string
   category: WorkoutCategory
   exercises: string[]
@@ -24,11 +30,18 @@ export interface GenerateWorkoutData {
   length: number
 }
 
-export const initialWorkoutData: Workout = {
+export const initialWorkoutData: NewWorkout = {
   title: '',
   category: WorkoutCategory.CHEST,
   exercises: [],
 };
+
+export const initialWorkoutRender: Workout = {
+  _id: '',
+  title: '',
+  category: WorkoutCategory.CHEST,
+  exercises: [],
+}
 
 export const initialGenerateWorkoutData: GenerateWorkoutData = {
   category: WorkoutCategory.CHEST,
