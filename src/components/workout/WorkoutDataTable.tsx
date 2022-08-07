@@ -60,9 +60,9 @@ const WorkoutDataTable: React.FC = () => {
   };
 
   const columns: GridColDef[] = [
-    { field: 'title', headerName: 'Title', minWidth: 300, flex: 1 },
-    { field: 'category', headerName: 'Category', width: 300 },
-    { field: 'actions', headerName: 'Actions', align: 'center', width: 150, sortable: false,
+    { field: 'title', headerName: 'Title', minWidth: 150, flex: 1 },
+    { field: 'category', headerName: 'Category', minWidth: 100, flex: 1 },
+    { field: 'actions', headerName: 'Actions', align: 'center', width: 125, sortable: false,
       renderCell: (params) => {
         return (
           <>

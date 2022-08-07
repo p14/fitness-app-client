@@ -1,12 +1,29 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { AppBar, Button, Toolbar, Typography } from '@mui/material';
+import { Menu as MenuIcon } from '@mui/icons-material';
+import { AppBar, Box, Button, IconButton, Menu, MenuItem, Toolbar, Typography } from '@mui/material';
 import { useSessionContext } from '../context/session.context';
 
 const Navbar: React.FC = () => {
 
   const sessionContext = useSessionContext();
   const navigate = useNavigate();
+
+  const [anchorEl, setAnchorEl] = useState<HTMLElement | undefined>(undefined);
+  const open = Boolean(anchorEl);
+
+  const handleOpen = (event: React.MouseEvent<HTMLButtonElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(undefined);
+  };
+
+  const handleClick = (route: string) => {
+    handleClose();
+    navigate(route);
+  };
 
   return (
     <AppBar position='static'>
@@ -16,15 +33,27 @@ const Navbar: React.FC = () => {
         </Typography>
         {sessionContext.isLoggedIn &&
           <>
-            <Button color='inherit' onClick={() => navigate('/generate')}>
-              Generate
-            </Button>
-            <Button color='inherit' onClick={() => navigate('/workouts')}>
-              Workouts
-            </Button>
-            <Button color='inherit' onClick={() => navigate('/dashboard')}>
-              Dashboard
-            </Button>
+            <Box sx={{ display: { xs: 'none', sm: 'block' }}}>
+              <Button color='inherit' onClick={() => navigate('/generate')}>
+                Generate
+              </Button>
+              <Button color='inherit' onClick={() => navigate('/workouts')}>
+                Workouts
+              </Button>
+              <Button color='inherit' onClick={() => navigate('/dashboard')}>
+                Dashboard
+              </Button>
+            </Box>
+            <Box sx={{ display: { xs: 'block', sm: 'none' } }}>
+              <IconButton color='inherit' onClick={handleOpen}>
+                <MenuIcon />
+              </IconButton>
+              <Menu anchorEl={anchorEl} open={open} onClose={handleClose}>
+                <MenuItem onClick={() => handleClick('/generate')}>Generate</MenuItem>
+                <MenuItem onClick={() => handleClick('/workouts')}>Workouts</MenuItem>
+                <MenuItem onClick={() => handleClick('/dashboard')}>Dashboard</MenuItem>
+              </Menu>
+            </Box>
           </>
         }
       </Toolbar>

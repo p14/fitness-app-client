@@ -38,9 +38,9 @@ const DataTable = ({ rows, columns, type }: DataTableProps) => {
 
   return (
     <Box sx={{ height: 400, marginTop: 2, width: '100%' }}>
-      <Box sx={{ display: 'flex', marginBottom: 1 }}>
+      <Box sx={{ display: 'flex', flexDirection: { xs: 'column', sm: 'row' }, marginBottom: 1 }}>
         <TextField
-          sx={{ width: '55%' }}
+          sx={{ width: { xs: '100%', sm: '55%' } }}
           label='Search'
           type='search'
           value={search}
@@ -49,7 +49,7 @@ const DataTable = ({ rows, columns, type }: DataTableProps) => {
         &nbsp;
         <TextField
           select
-          sx={{ width: '30%' }}
+          sx={{ width: { xs: '100%', sm: '30%' } }}
           label='Search Field'
           value={searchField}
           onChange={(e) => setSearchField(e.target.value)}
@@ -63,8 +63,8 @@ const DataTable = ({ rows, columns, type }: DataTableProps) => {
           })}
         </TextField>
         &nbsp;
-        <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: '15%' }}>
-          <Button variant='contained' onClick={() => navigate(`/${type}/new`)}>
+        <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: { xs: '100%', sm: '15%' } }}>
+          <Button variant='contained' sx={{ flexGrow: { xs: 1, sm: 0 } }} onClick={() => navigate(`/${type}/new`)}>
             New Entry
           </Button>
         </Box>
