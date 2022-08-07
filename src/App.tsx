@@ -1,6 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import AccountForm from './components/AccountForm';
+import AccountEditor from './components/account/AccountEditor';
 import RequireAuth from './components/auth/RequireAuth';
 import Dashboard from './components/Dashboard';
 import FeedbackAlert from './components/FeedbackAlert';
@@ -34,7 +34,7 @@ const App: React.FC = () => {
                 {/* Private Routes */}
                 <Route element={<RequireAuth />}>
                   <Route path='/dashboard' element={<Dashboard />} />
-                  <Route path='/account' element={<AccountForm />} />
+                  <Route path='/account' element={<AccountEditor />} />
                   <Route path='/generate' element={<GenerateWorkout />} />
                   <Route path='/workouts' element={<WorkoutDashboard />} />
                   <Route path='/workouts/new' element={<WorkoutFormCreate />} />

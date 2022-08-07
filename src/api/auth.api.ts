@@ -1,7 +1,7 @@
 import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
 import jwt_decode from 'jwt-decode';
 import { LoginData, RegisterData, TokenData } from '../models/auth.model';
-import { User } from '../models/user.model';
+import { User, PasswordUpdateData } from '../models/user.model';
 import { setupConfig } from '../utils/helpers';
 
 export const setupAuthConfig = (method: string, url: string, data: any): AxiosRequestConfig => {
@@ -50,6 +50,11 @@ export const register = (registerData: RegisterData): Promise<AxiosResponse> => 
 
 export const updateUser = async (userData: User): Promise<AxiosResponse> => {
   const config = await setupConfig('PUT', `/users/${userData._id}`, userData);
+  return axios.request(config);
+}
+
+export const updateUserPassword = async (id: string, passwordUpdateData: PasswordUpdateData): Promise<AxiosResponse> => {
+  const config = await setupConfig('PUT', `/users/${id}/update-password`, passwordUpdateData);
   return axios.request(config);
 }
 

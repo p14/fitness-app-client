@@ -4,7 +4,7 @@ import { UserRole } from '../models/user.model';
 import { clearTokenStorage, isExpired, refresh } from '../api/auth.api';
 
 export interface SessionUser {
-  '_id': string
+  _id: string
   firstName: string
   lastName: string
   email: string
@@ -20,7 +20,7 @@ export interface SessionContextUser {
 export const initialSessionContext: SessionContextUser = {
   isLoggedIn: false,
   user: {
-    '_id': '',
+    _id: '',
     firstName: '',
     lastName: '',
     email: '',
@@ -33,7 +33,7 @@ export const createSessionState = (isLoggedIn: boolean, data: SessionUser): Sess
   return {
     isLoggedIn,
     user: {
-      '_id': data._id,
+      _id: data._id,
       firstName: data.firstName,
       lastName: data.lastName,
       email: data.email,
@@ -80,7 +80,7 @@ export function SessionProvider({ children }: { children: any }) {
     setSessionState({
       isLoggedIn,
       user: {
-        '_id': data._id,
+        _id: data._id,
         firstName: data.firstName,
         lastName: data.lastName,
         email: data.email,

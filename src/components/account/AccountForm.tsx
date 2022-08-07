@@ -1,24 +1,27 @@
-import React from 'react';
 import { PersonRounded } from '@mui/icons-material';
 import { Avatar, Box, Button, Container, createTheme, CssBaseline, FormControl, Grid, TextField, ThemeProvider, Typography } from '@mui/material';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
-import { refresh, updateUser } from '../api/auth.api';
-import { useFeedbackContext } from '../context/feedback.context';
-import { useSessionContext } from '../context/session.context';
-import { User } from '../models/user.model';
+import { refresh, updateUser } from '../../api/auth.api';
+import { useFeedbackContext } from '../../context/feedback.context';
+import { SessionUser } from '../../context/session.context';
+import { User } from '../../models/user.model';
 
-const AccountForm: React.FC = () => {
+interface AccountFormProps {
+  user: SessionUser
+  setSession: (isLoggedIn: boolean, user: SessionUser) => void
+}
+
+const AccountForm = ({ user, setSession }: AccountFormProps) => {
 
   const theme = createTheme();
-  const sessionContext = useSessionContext();
   const feedbackContext = useFeedbackContext();
 
-  const handleRegister = (userData: User) => {
+  const handleUpdateAccount = (userData: User) => {
     updateUser(userData)
       .then((response) => response.data)
       .then((data) => {
-        sessionContext.setSession(true, data);
+        setSession(true, data);
         refresh();
         feedbackContext.setFeedback({
           message: 'Account Updated!', 
@@ -47,13 +50,12 @@ const AccountForm: React.FC = () => {
     firstName: Yup.string().required(),
     lastName: Yup.string().required(),
     email: Yup.string().email('Invalid email address').required(),
-    password: Yup.string().required(),
   });
 
   const formik = useFormik({
-    initialValues: { ...sessionContext.user, password: '' },
+    initialValues: user,
     validationSchema,
-    onSubmit: (values: User) => handleRegister(values),
+    onSubmit: (values: User) => handleUpdateAccount(values),
   });
 
   return (
@@ -103,18 +105,6 @@ const AccountForm: React.FC = () => {
                       helperText={formik.touched.email && formik.errors.email}
                       name='email'
                       label='Email'
-                    />
-                  </Grid>
-                  <Grid item xs={12}>
-                    <TextField
-                      fullWidth
-                      value={formik.values.password}
-                      onChange={formik.handleChange}
-                      error={formik.touched.password && Boolean(formik.errors.password)}
-                      helperText={formik.touched.password && formik.errors.password}
-                      name='password'
-                      label='Password'
-                      type='password'
                     />
                   </Grid>
                 </Grid>
