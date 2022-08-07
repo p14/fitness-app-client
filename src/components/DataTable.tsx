@@ -54,7 +54,7 @@ const DataTable = ({ rows, columns, type }: DataTableProps) => {
           value={searchField}
           onChange={(e) => setSearchField(e.target.value)}
         >
-          {columns.filter((column) => column.field !== 'actions').map((column) => {
+          {columns.filter((column) => column.field !== 'actions' && !column.hide).map((column) => {
             return (
               <MenuItem key={column.field} value={column.field}>
                 {column.headerName}
