@@ -12,7 +12,6 @@ const WorkoutEditor: React.FC = () => {
   const workoutContext = useWorkoutContext();
   const feedbackContext = useFeedbackContext();
   const theme = createTheme();
-
   const navigate = useNavigate();
 
   const [workout, setWorkout] = useState<Workout>(initialWorkoutRender);

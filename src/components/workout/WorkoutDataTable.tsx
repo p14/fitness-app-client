@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Delete, Edit, PlayArrow } from '@mui/icons-material';
-import { IconButton } from '@mui/material';
+import { IconButton, useMediaQuery, useTheme } from '@mui/material';
 import { GridColDef } from '@mui/x-data-grid';
 import { refresh } from '../../api/auth.api';
 import { useFeedbackContext } from '../../context/feedback.context';
@@ -17,7 +17,10 @@ const WorkoutDataTable: React.FC = () => {
   const feedbackContext = useFeedbackContext();
   const sessionContext = useSessionContext();
   const workoutContext = useWorkoutContext();
+  const theme = useTheme();
   const navigate = useNavigate();
+
+  const isSmallScreen = useMediaQuery(theme.breakpoints.between('xs', 'sm'));
 
   const [workoutId, setWorkoutId] = useState<string>('');
   const [workoutTitle, setWorkoutTitle] = useState<string>('');
@@ -61,7 +64,7 @@ const WorkoutDataTable: React.FC = () => {
 
   const columns: GridColDef[] = [
     { field: 'title', headerName: 'Title', minWidth: 150, flex: 1 },
-    { field: 'category', headerName: 'Category', minWidth: 100, flex: 1 },
+    { field: 'category', headerName: 'Category', width: 200, hide: isSmallScreen ? true : false },
     { field: 'actions', headerName: 'Actions', align: 'center', width: 125, sortable: false,
       renderCell: (params) => {
         return (

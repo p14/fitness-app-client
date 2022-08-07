@@ -17,7 +17,6 @@ const WorkoutRender = () => {
   const feedbackContext = useFeedbackContext();
   const workoutContext = useWorkoutContext();
   const theme = createTheme();
-
   const navigate = useNavigate();
 
   const [completedExercises, setCompletedExercises] = useState<string[]>([]);
