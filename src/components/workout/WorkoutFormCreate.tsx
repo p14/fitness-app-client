@@ -172,8 +172,12 @@ const WorkoutFormCreate: React.FC = () => {
                     fullWidth
                     value={formik.values.category}
                     onChange={(e) => {
-                      setConfirmationCategory(e.target.value as WorkoutCategory);
-                      setOpenConfirmationModal(true);
+                      if (formik.values.exercises.length) {
+                        setConfirmationCategory(e.target.value as WorkoutCategory);
+                        setOpenConfirmationModal(true);
+                      } else {
+                        formik.handleChange(e);
+                      }
                     }}
                     error={formik.touched.category && Boolean(formik.errors.category)}
                     helperText={formik.touched.category && formik.errors.category}
