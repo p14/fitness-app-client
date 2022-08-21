@@ -49,7 +49,7 @@ const DataTable = ({ rows, columns, type }: DataTableProps) => {
         />
         <TextField
           select
-          sx={{ display: { xs: 'none', sm: 'flex' }, paddingLeft: '5px', width: '30%' }}
+          sx={{ display: { xs: 'none', sm: 'flex' }, marginLeft: '5px', width: '30%' }}
           label='Search Field'
           value={searchField}
           onChange={(e) => setSearchField(e.target.value)}
