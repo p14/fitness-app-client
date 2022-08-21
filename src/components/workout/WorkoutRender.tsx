@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { Check, FitnessCenterRounded, Undo } from '@mui/icons-material';
+import { Check, FitnessCenterRounded, KeyboardBackspace, Undo } from '@mui/icons-material';
 import { Avatar, Box, Button, Container, createTheme, CssBaseline, Divider, Grid, IconButton, LinearProgress, List, ListItem, ListItemText, ThemeProvider, Typography } from '@mui/material';
 import { useExerciseContext } from '../../context/exercise.context';
 import { useFeedbackContext } from '../../context/feedback.context';
@@ -74,7 +74,14 @@ const WorkoutRender = () => {
         <ThemeProvider theme={theme}>
           <Container component='main' maxWidth='md'>
             <CssBaseline />
-            <Box sx={{ alignItems: 'center', display: 'flex', flexDirection: 'column', marginTop: 8 }}>
+            <Box sx={{ marginTop: 4 }}>
+              <Button onClick={() => navigate('/workouts')}>
+                <KeyboardBackspace />
+                &nbsp;
+                Back
+              </Button>
+            </Box>
+            <Box sx={{ alignItems: 'center', display: 'flex', flexDirection: 'column' }}>
               <Avatar sx={{ margin: 1, backgroundColor: 'secondary' }}>
                 <FitnessCenterRounded />
               </Avatar>

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Delete, FitnessCenterRounded } from '@mui/icons-material';
+import { Delete, FitnessCenterRounded, KeyboardBackspace } from '@mui/icons-material';
 import { Avatar, Box, Button, Container, createTheme, CssBaseline, Divider, FormControl, Grid, IconButton, List, ListItem, ListItemText, MenuItem, TextField, ThemeProvider, Typography } from '@mui/material';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
@@ -143,7 +143,14 @@ const WorkoutFormCreate: React.FC = () => {
     <ThemeProvider theme={theme}>
       <Container component='main' maxWidth='md'>
         <CssBaseline />
-        <Box sx={{ alignItems: 'center', display: 'flex', flexDirection: 'column', marginTop: 8 }}>
+        <Box sx={{ marginTop: 4 }}>
+          <Button onClick={() => navigate('/workouts')}>
+            <KeyboardBackspace />
+            &nbsp;
+            Back
+          </Button>
+        </Box>
+        <Box sx={{ alignItems: 'center', display: 'flex', flexDirection: 'column' }}>
           <Avatar sx={{ margin: 1, backgroundColor: 'secondary' }}>
             <FitnessCenterRounded />
           </Avatar>

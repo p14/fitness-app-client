@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Box, Button, MenuItem, TextField } from '@mui/material';
 import { DataGrid, GridColDef } from '@mui/x-data-grid';
+import { capitalize } from '../utils/helpers';
 
 interface DataTableProps {
   rows: any[]
@@ -37,19 +38,18 @@ const DataTable = ({ rows, columns, type }: DataTableProps) => {
   }, [rows]);
 
   return (
-    <Box sx={{ height: 400, marginTop: 2, width: '100%' }}>
+    <Box marginTop='2rem' width='100%'>
       <Box sx={{ display: 'flex', flexDirection: { xs: 'column', sm: 'row' }, marginBottom: 1 }}>
         <TextField
-          sx={{ width: { xs: '100%', sm: '55%' } }}
+          sx={{ paddingBottom: { xs: '8px', sm: '0px' }, width: { xs: '100%', sm: '55%' } }}
           label='Search'
           type='search'
           value={search}
           onChange={(e) => setSearch(e.target.value)}
         />
-        &nbsp;
         <TextField
           select
-          sx={{ width: { xs: '100%', sm: '30%' } }}
+          sx={{ display: { xs: 'none', sm: 'flex' }, paddingLeft: '5px', width: '30%' }}
           label='Search Field'
           value={searchField}
           onChange={(e) => setSearchField(e.target.value)}
@@ -62,14 +62,14 @@ const DataTable = ({ rows, columns, type }: DataTableProps) => {
             )
           })}
         </TextField>
-        &nbsp;
-        <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: { xs: '100%', sm: '15%' } }}>
+        <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', padding: { xs: '0px', sm: '0px 5px' }, width: { xs: '100%', sm: '15%' } }}>
           <Button variant='contained' sx={{ flexGrow: { xs: 1, sm: 0 } }} onClick={() => navigate(`/${type}/new`)}>
-            New Entry
+            New {capitalize(type).slice(0, -1)}
           </Button>
         </Box>
       </Box>
       <DataGrid
+        autoHeight
         rows={filteredRows}
         columns={columns}
         getRowId={(row) => row._id}

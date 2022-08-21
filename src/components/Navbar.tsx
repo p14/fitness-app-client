@@ -33,15 +33,15 @@ const Navbar: React.FC = () => {
         </Typography>
         {sessionContext.isLoggedIn &&
           <>
-            <Box sx={{ display: { xs: 'none', sm: 'block' }}}>
-              <Button color='inherit' onClick={() => navigate('/generate')}>
-                Generate
+            <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
+              <Button color='inherit' onClick={() => navigate('/dashboard')}>
+                Dashboard
               </Button>
               <Button color='inherit' onClick={() => navigate('/workouts')}>
                 Workouts
               </Button>
-              <Button color='inherit' onClick={() => navigate('/dashboard')}>
-                Dashboard
+              <Button color='inherit' onClick={() => navigate('/generate')}>
+                Generate
               </Button>
             </Box>
             <Box sx={{ display: { xs: 'block', sm: 'none' } }}>
@@ -49,9 +49,9 @@ const Navbar: React.FC = () => {
                 <MenuIcon />
               </IconButton>
               <Menu anchorEl={anchorEl} open={open} onClose={handleClose}>
-                <MenuItem onClick={() => handleClick('/generate')}>Generate</MenuItem>
-                <MenuItem onClick={() => handleClick('/workouts')}>Workouts</MenuItem>
                 <MenuItem onClick={() => handleClick('/dashboard')}>Dashboard</MenuItem>
+                <MenuItem onClick={() => handleClick('/workouts')}>Workouts</MenuItem>
+                <MenuItem onClick={() => handleClick('/generate')}>Generate</MenuItem>
               </Menu>
             </Box>
           </>

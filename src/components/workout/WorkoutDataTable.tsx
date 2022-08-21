@@ -8,6 +8,7 @@ import { useFeedbackContext } from '../../context/feedback.context';
 import { useSessionContext } from '../../context/session.context';
 import { useWorkoutContext } from '../../context/workout.context';
 import { DataType } from '../../models/data.model';
+import { Workout } from '../../models/workout.model';
 import DataTable from '../DataTable';
 import DeleteModal from '../DeleteModal';
 import { removeWorkoutFromUser } from './workout.service';
@@ -70,6 +71,15 @@ const WorkoutDataTable: React.FC = () => {
     handleRemoveUserWorkout(id);
   };
 
+  const createWorkoutRows = (workouts: Workout[]) => (
+    workouts.map((workout) => (
+      {
+        ...workout,
+        category: workout.category.replace('_', ' '),
+      }
+    ))
+  );
+
   const columns: GridColDef[] = [
     { field: 'title', headerName: 'Title', minWidth: 150, flex: 1 },
     { field: 'category', headerName: 'Category', width: 200, hide: isSmallScreen ? true : false },
@@ -94,7 +104,11 @@ const WorkoutDataTable: React.FC = () => {
 
   return (
     <>
-      <DataTable rows={workoutContext.workouts} columns={columns} type={DataType.WORKOUT} />
+      <DataTable
+        rows={createWorkoutRows(workoutContext.workouts)}
+        columns={columns}
+        type={DataType.WORKOUT}
+      />
       { openModal &&
         <DeleteModal
           id={workoutId}
