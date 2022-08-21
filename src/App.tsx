@@ -11,7 +11,7 @@ import PageNotFound from './components/PageNotFound';
 import RegisterForm from './components/RegisterForm';
 import WorkoutDashboard from './components/workout/WorkoutDashboard';
 import WorkoutEditor from './components/workout/WorkoutEditor';
-import WorkoutFormCreate from './components/workout/WorkoutFormCreate';
+import WorkoutFormCreate from './components/workout/CreateForm';
 import WorkoutRender from './components/workout/WorkoutRender';
 import { ExerciseProvider } from './context/exercise.context';
 import { FeedbackProvider } from './context/feedback.context';

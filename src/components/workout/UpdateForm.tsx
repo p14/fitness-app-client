@@ -8,9 +8,9 @@ import { useExerciseContext } from '../../context/exercise.context';
 import { useFeedbackContext } from '../../context/feedback.context';
 import { Exercise } from '../../models/exercise.model';
 import { Workout, WorkoutCategory } from '../../models/workout.model';
-import { parseExerciseCategories, parseWorkout, updateWorkout } from './workout.service';
-import ConfirmationModal from './ConfirmationModal';
-import ExerciseModal from './ExerciseModal';
+import { parseExerciseCategories, parseWorkout, updateWorkout } from '../workout/workout.service';
+import ConfirmationModal from '../workout/ConfirmationModal';
+import ExerciseModal from '../workout/ExerciseModal';
 
 interface WorkoutFormProps {
   id: string

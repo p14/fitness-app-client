@@ -4,7 +4,7 @@ import { Box, Container, createTheme, CssBaseline, LinearProgress, ThemeProvider
 import { useFeedbackContext } from '../../context/feedback.context';
 import { useWorkoutContext } from '../../context/workout.context';
 import { initialWorkoutRender, Workout } from '../../models/workout.model';
-import WorkoutForm from './WorkoutForm';
+import WorkoutForm from './UpdateForm';
 
 const WorkoutEditor: React.FC = () => {
 
@@ -45,7 +45,8 @@ const WorkoutEditor: React.FC = () => {
 
   return (
     <>
-      { loading &&
+      { !id || loading
+        ?
         <ThemeProvider theme={theme}>
           <Container component='main' maxWidth='md'>
             <CssBaseline />
@@ -54,8 +55,7 @@ const WorkoutEditor: React.FC = () => {
             </Box>
           </Container>
         </ThemeProvider>
-      }
-      { id && !loading &&
+        :
         <WorkoutForm
           id={id}
           workout={workout}
