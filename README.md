@@ -1,4 +1,4 @@
-# ARCHIVED
+# Archived
 Check out the current state of this app [here](https://github.com/p14/every-man-jacked-client).
 
 # Every Man Jacked (Client)
