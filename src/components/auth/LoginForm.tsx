@@ -4,10 +4,10 @@ import { LockOutlined } from '@mui/icons-material';
 import { Avatar, Box, Button, Container, createTheme, CssBaseline, FormControl, Grid, LinearProgress, TextField, ThemeProvider, Typography } from '@mui/material';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
-import { login, setTokenStorage } from '../api/auth.api';
-import { useFeedbackContext } from '../context/feedback.context';
-import { useSessionContext } from '../context/session.context';
-import { initialLoginData, LoginData } from '../models/auth.model';
+import { login, setTokenStorage } from '../../api/auth.api';
+import { useFeedbackContext } from '../../context/feedback.context';
+import { useSessionContext } from '../../context/session.context';
+import { initialLoginData, LoginData } from '../../models/auth.model';
 
 const LoginForm: React.FC = () => {
 

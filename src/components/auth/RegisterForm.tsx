@@ -4,10 +4,10 @@ import { LockOutlined } from '@mui/icons-material';
 import { Avatar, Box, Button, Container, createTheme, CssBaseline, FormControl, Grid, TextField, ThemeProvider, Typography } from '@mui/material';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
-import { register, setTokenStorage } from '../api/auth.api';
-import { useFeedbackContext } from '../context/feedback.context';
-import { useSessionContext } from '../context/session.context';
-import { initialRegisterData, RegisterData } from '../models/auth.model';
+import { register, setTokenStorage } from '../../api/auth.api';
+import { useFeedbackContext } from '../../context/feedback.context';
+import { useSessionContext } from '../../context/session.context';
+import { initialRegisterData, RegisterData } from '../../models/auth.model';
 
 const RegisterForm: React.FC = () => {
 

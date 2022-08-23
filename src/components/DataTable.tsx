@@ -24,10 +24,13 @@ const DataTable = ({ rows, columns, type }: DataTableProps) => {
       setFilteredRows(rows);
     } else {
       const filtered = rows.filter((row) => {
+        let searchValues: string[];
         if (Array.isArray(row[searchField])) {
-          return row[searchField].some((option: string) => option.toLowerCase().startsWith(search.toLowerCase()));
+          searchValues = row[searchField];
+        } else {
+          searchValues = row[searchField].split(' ');
         }
-        return row[searchField].toLowerCase().startsWith(search.toLowerCase());
+        return searchValues.some((option: string) => option.toLowerCase().startsWith(search.toLowerCase()));
       });
       setFilteredRows(filtered);
     }
