@@ -4,7 +4,7 @@ import { Delete, Edit, PlayArrow } from '@mui/icons-material';
 import { IconButton, useMediaQuery, useTheme } from '@mui/material';
 import { GridColDef } from '@mui/x-data-grid';
 import { refresh } from '../../api/auth.api';
-import { useFeedbackContext } from '../../context/feedback.context';
+import { FeedbackType, useFeedbackContext } from '../../context/feedback.context';
 import { useSessionContext } from '../../context/session.context';
 import { useWorkoutContext } from '../../context/workout.context';
 import { DataType } from '../../models/data.model';
@@ -50,13 +50,13 @@ const WorkoutDataTable: React.FC = () => {
         if (typeof error === 'object') {
           feedbackContext.setFeedback({
             message: error.response.data ?? error.message, 
-            error: true,
+            type: FeedbackType.ERROR,
             open: true,
           });
         } else {
           feedbackContext.setFeedback({
             message: error, 
-            error: true,
+            type: FeedbackType.ERROR,
             open: true,
           });
         }

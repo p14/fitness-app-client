@@ -6,7 +6,7 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { refresh } from '../../api/auth.api';
 import { useExerciseContext } from '../../context/exercise.context';
-import { useFeedbackContext } from '../../context/feedback.context';
+import { FeedbackType, useFeedbackContext } from '../../context/feedback.context';
 import { useSessionContext } from '../../context/session.context';
 import { useWorkoutContext } from '../../context/workout.context';
 import { Exercise } from '../../models/exercise.model';
@@ -58,8 +58,8 @@ const WorkoutFormCreate: React.FC = () => {
             refresh();
             feedbackContext.setFeedback({
               message: 'Workout Created!',
+              type: FeedbackType.SUCCESS,
               open: true,
-              type: 0
             });
             navigate(`/workouts/${workoutData._id}/edit`);
           })
@@ -67,13 +67,13 @@ const WorkoutFormCreate: React.FC = () => {
             if (typeof error === 'object') {
               feedbackContext.setFeedback({
                 message: error.response.data ?? error.message, 
-                error: true,
+                type: FeedbackType.ERROR,
                 open: true,
               });
             } else {
               feedbackContext.setFeedback({
                 message: error, 
-                error: true,
+                type: FeedbackType.ERROR,
                 open: true,
               });
             }
@@ -83,13 +83,13 @@ const WorkoutFormCreate: React.FC = () => {
         if (typeof error === 'object') {
           feedbackContext.setFeedback({
             message: error.response.data ?? error.message, 
-            error: true,
+            type: FeedbackType.ERROR,
             open: true,
           });
         } else {
           feedbackContext.setFeedback({
             message: error, 
-            error: true,
+            type: FeedbackType.ERROR,
             open: true,
           });
         }

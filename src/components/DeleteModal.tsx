@@ -1,6 +1,6 @@
 import { Dialog, DialogContent, DialogTitle, Box, Button } from '@mui/material';
 import axios from 'axios';
-import { useFeedbackContext } from '../context/feedback.context';
+import { FeedbackType, useFeedbackContext } from '../context/feedback.context';
 import { DataType } from '../models/data.model';
 import { capitalize, setupConfig } from '../utils/helpers';
 
@@ -23,8 +23,8 @@ const DeleteModal = ({ id, name, type, updateContext, handleClose }: DeleteModal
         updateContext(id);
         feedbackContext.setFeedback({
           message: `${capitalize(type).slice(0, -1)} deleted!`,
+          type: FeedbackType.SUCCESS,
           open: true,
-          type: 0,
         });
         handleClose();
       })
@@ -32,13 +32,13 @@ const DeleteModal = ({ id, name, type, updateContext, handleClose }: DeleteModal
         if (typeof error === 'object') {
           feedbackContext.setFeedback({
             message: error.response.data ?? error.message, 
-            error: true,
+            type: FeedbackType.ERROR,
             open: true,
           });
         } else {
           feedbackContext.setFeedback({
             message: error, 
-            error: true,
+            type: FeedbackType.ERROR,
             open: true,
           });
         }

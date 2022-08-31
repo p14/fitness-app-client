@@ -5,7 +5,7 @@ import { Avatar, Box, Button, Container, createTheme, CssBaseline, Divider, Form
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { useExerciseContext } from '../../context/exercise.context';
-import { useFeedbackContext } from '../../context/feedback.context';
+import { FeedbackType, useFeedbackContext } from '../../context/feedback.context';
 import { Exercise } from '../../models/exercise.model';
 import { Workout, WorkoutCategory } from '../../models/workout.model';
 import { parseExerciseCategories, parseWorkout, updateWorkout } from '../workout/workout.service';
@@ -37,21 +37,21 @@ const WorkoutForm = ({ id, workout, handleSetWorkout }: WorkoutFormProps) => {
       handleSetWorkout(workoutData);
       feedbackContext.setFeedback({
         message: 'Workout Updated!',
+        type: FeedbackType.SUCCESS,
         open: true,
-        type: 0
       });
     })
     .catch((error: any) => {
       if (typeof error === 'object') {
         feedbackContext.setFeedback({
           message: error.response.data ?? error.message, 
-          error: true,
+          type: FeedbackType.ERROR,
           open: true,
         });
       } else {
         feedbackContext.setFeedback({
           message: error, 
-          error: true,
+          type: FeedbackType.ERROR,
           open: true,
         });
       }

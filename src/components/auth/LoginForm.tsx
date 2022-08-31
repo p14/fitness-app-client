@@ -5,7 +5,7 @@ import { Avatar, Box, Button, Container, createTheme, CssBaseline, FormControl, 
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { login, setTokenStorage } from '../../api/auth.api';
-import { useFeedbackContext } from '../../context/feedback.context';
+import { FeedbackType, useFeedbackContext } from '../../context/feedback.context';
 import { useSessionContext } from '../../context/session.context';
 import { initialLoginData, LoginData } from '../../models/auth.model';
 
@@ -20,10 +20,19 @@ const LoginForm: React.FC = () => {
 
   const handleLogin = (loginData: LoginData) => {
     setLoading(true);
+    const startingServers = setTimeout(() => {
+      feedbackContext.setFeedback({
+        message: 'Firing up the (free) servers, this might take a minute.', 
+        type: FeedbackType.WARNING,
+        open: true,
+      });
+    }, 5000);
+
     login(loginData)
       .then((response) => response.data)
       .then((data) => {
         setLoading(false);
+        clearTimeout(startingServers);
         setTokenStorage(data);
         sessionContext.setSession(true, data.user);
         navigate('/dashboard');
@@ -33,14 +42,14 @@ const LoginForm: React.FC = () => {
           setLoading(false);
           feedbackContext.setFeedback({
             message: error.response.data ?? error.message, 
-            error: true,
+            type: FeedbackType.ERROR,
             open: true,
           });
         } else {
           setLoading(false);
           feedbackContext.setFeedback({
             message: error, 
-            error: true,
+            type: FeedbackType.ERROR,
             open: true,
           });
         }

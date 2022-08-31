@@ -2,7 +2,7 @@ import { Box, Button, Container, createTheme, CssBaseline, FormControl, Grid, Te
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { updateUserPassword } from '../../api/auth.api';
-import { useFeedbackContext } from '../../context/feedback.context';
+import { FeedbackType, useFeedbackContext } from '../../context/feedback.context';
 import { SessionUser } from '../../context/session.context';
 import { initialPasswordUpdateData, PasswordUpdateData } from '../../models/user.model';
 
@@ -21,7 +21,7 @@ const AccountPasswordForm = ({ user }: AccountPasswordFormProps) => {
       .then(() => {
         feedbackContext.setFeedback({
           message: 'Account Password Updated!', 
-          error: false,
+          type: FeedbackType.SUCCESS,
           open: true,
         });
       })
@@ -29,13 +29,13 @@ const AccountPasswordForm = ({ user }: AccountPasswordFormProps) => {
         if (typeof error === 'object') {
           feedbackContext.setFeedback({
             message: error.response.data ?? error.message, 
-            error: true,
+            type: FeedbackType.ERROR,
             open: true,
           });
         } else {
           feedbackContext.setFeedback({
             message: error, 
-            error: true,
+            type: FeedbackType.ERROR,
             open: true,
           });
         }

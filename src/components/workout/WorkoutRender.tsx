@@ -3,7 +3,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { Check, FitnessCenterRounded, KeyboardBackspace, Undo } from '@mui/icons-material';
 import { Avatar, Box, Button, Container, createTheme, CssBaseline, Divider, Grid, IconButton, LinearProgress, List, ListItem, ListItemText, ThemeProvider, Typography } from '@mui/material';
 import { useExerciseContext } from '../../context/exercise.context';
-import { useFeedbackContext } from '../../context/feedback.context';
+import { FeedbackType, useFeedbackContext } from '../../context/feedback.context';
 import { useWorkoutContext } from '../../context/workout.context';
 import { Exercise } from '../../models/exercise.model';
 import { initialWorkoutRender, Workout } from '../../models/workout.model';
@@ -49,7 +49,7 @@ const WorkoutRender = () => {
       } else {
         feedbackContext.setFeedback({
           message: 'Workout Not Found', 
-          error: true,
+          type: FeedbackType.ERROR,
           open: true,
         });
         setLoading(false);

@@ -3,7 +3,7 @@ import { Avatar, Box, Button, Container, createTheme, CssBaseline, FormControl, 
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { refresh, updateUser } from '../../api/auth.api';
-import { useFeedbackContext } from '../../context/feedback.context';
+import { FeedbackType, useFeedbackContext } from '../../context/feedback.context';
 import { SessionUser } from '../../context/session.context';
 import { User } from '../../models/user.model';
 
@@ -25,7 +25,7 @@ const AccountForm = ({ user, setSession }: AccountFormProps) => {
         refresh();
         feedbackContext.setFeedback({
           message: 'Account Updated!', 
-          error: false,
+          type: FeedbackType.SUCCESS,
           open: true,
         });
       })
@@ -33,13 +33,13 @@ const AccountForm = ({ user, setSession }: AccountFormProps) => {
         if (typeof error === 'object') {
           feedbackContext.setFeedback({
             message: error.response.data ?? error.message, 
-            error: true,
+            type: FeedbackType.ERROR,
             open: true,
           });
         } else {
           feedbackContext.setFeedback({
             message: error, 
-            error: true,
+            type: FeedbackType.ERROR,
             open: true,
           });
         }

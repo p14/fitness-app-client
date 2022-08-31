@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Box, Container, createTheme, CssBaseline, LinearProgress, ThemeProvider } from '@mui/material';
-import { useFeedbackContext } from '../../context/feedback.context';
+import { FeedbackType, useFeedbackContext } from '../../context/feedback.context';
 import { useWorkoutContext } from '../../context/workout.context';
 import { initialWorkoutRender, Workout } from '../../models/workout.model';
 import WorkoutForm from './UpdateForm';
@@ -34,7 +34,7 @@ const WorkoutEditor: React.FC = () => {
       } else {
         feedbackContext.setFeedback({
           message: 'Workout Not Found', 
-          error: true,
+          type: FeedbackType.ERROR,
           open: true,
         });
         setLoading(false);

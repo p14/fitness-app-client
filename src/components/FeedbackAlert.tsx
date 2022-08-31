@@ -14,7 +14,7 @@ const FeedbackAlert = () => {
     >
       <Alert
         onClose={() => feedbackContext.setFeedback({ ...feedbackContext.feedback, open: false })}
-        severity={feedbackContext.feedback.error ? 'error' : 'success'}
+        severity={feedbackContext.feedback.type}
       >
         {feedbackContext.feedback.message}
       </Alert>
