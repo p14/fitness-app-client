@@ -7,7 +7,7 @@ import { setupConfig } from '../utils/helpers';
 export const setupAuthConfig = (method: string, url: string, data: any): AxiosRequestConfig => {
   return {
     method,
-    url: process.env.REACT_APP_API_URL + url,
+    url: process.env.REACT_APP_API_URL + '/api' + url,
     headers: {
       'Content-Type': 'application/json',
       'Access-Control-Allow-Credentials': 'true',
@@ -38,6 +38,18 @@ export const clearTokenStorage = (): void => {
   localStorage.removeItem('RefreshToken');
 };
 
+export const statusCheck = (): Promise<AxiosResponse> => {
+  return axios.request({
+    method: 'GET',
+    url: process.env.REACT_APP_API_URL + '/status-check',
+    headers: {
+      'Content-Type': 'application/json',
+      'Access-Control-Allow-Credentials': 'true',
+      'Access-Control-Allow-Origin': '*',
+    },
+  });
+};
+
 export const login = (loginData: LoginData): Promise<AxiosResponse> => {
   const config = setupAuthConfig('POST', '/account/login', loginData);
   return axios.request(config);
@@ -63,22 +75,6 @@ export const logout = (): void => {
   window.location.reload();
 };
 
-export const refresh = async (): Promise<string> => {
-  const refreshToken = localStorage.getItem('RefreshToken');
-  if (!refreshToken) {
-    throw new Error('No Refresh Token Found');
-  }
-
-  const config = setupAuthConfig('POST', '/account/refresh', { refreshToken });
-  return axios.request(config)
-    .then((response) => response.data)
-    .then((data => {
-      setTokenStorage(data)
-      return data.AuthenticationResult.AccessToken;
-    }))
-    .catch((error) => console.error(error.response.data));
-};
-
 export const isExpired = (unixTime: number): boolean => {
   const expiration = unixTime * 1000;
   return expiration < Date.now();
@@ -91,4 +87,23 @@ export const isTokenExpired = (token: string): boolean => {
     return false;
   }
   return true;
+};
+
+export const refresh = async (): Promise<string> => {
+
+  // Grab refresh token if available
+  const refreshToken = localStorage.getItem('RefreshToken');
+  if (!refreshToken) {
+    throw new Error('No Refresh Token Found');
+  }
+
+  // Setup refresh request
+  const config = setupAuthConfig('POST', '/account/refresh', { refreshToken });
+  return axios.request(config)
+    .then((response) => response.data)
+    .then((data => {
+      setTokenStorage(data);
+      return data.AuthenticationResult.AccessToken;
+    }))
+    .catch((error) => console.error(error.response.data));
 };

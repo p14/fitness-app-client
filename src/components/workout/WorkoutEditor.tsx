@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { Box, Container, createTheme, CssBaseline, LinearProgress, ThemeProvider } from '@mui/material';
 import { FeedbackType, useFeedbackContext } from '../../context/feedback.context';
 import { useWorkoutContext } from '../../context/workout.context';
 import { initialWorkoutRender, Workout } from '../../models/workout.model';
+import Loading from '../Loading';
 import WorkoutForm from './UpdateForm';
 
 const WorkoutEditor: React.FC = () => {
@@ -11,7 +11,6 @@ const WorkoutEditor: React.FC = () => {
   const { id } = useParams();
   const workoutContext = useWorkoutContext();
   const feedbackContext = useFeedbackContext();
-  const theme = createTheme();
   const navigate = useNavigate();
 
   const [workout, setWorkout] = useState<Workout>(initialWorkoutRender);
@@ -47,14 +46,7 @@ const WorkoutEditor: React.FC = () => {
     <>
       { !id || loading
         ?
-        <ThemeProvider theme={theme}>
-          <Container component='main' maxWidth='md'>
-            <CssBaseline />
-            <Box sx={{ marginTop: 8 }}>
-              <LinearProgress />
-            </Box>
-          </Container>
-        </ThemeProvider>
+        <Loading />
         :
         <WorkoutForm
           id={id}

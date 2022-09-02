@@ -1,13 +1,14 @@
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Check, FitnessCenterRounded, KeyboardBackspace, Undo } from '@mui/icons-material';
-import { Avatar, Box, Button, Container, createTheme, CssBaseline, Divider, Grid, IconButton, LinearProgress, List, ListItem, ListItemText, ThemeProvider, Typography } from '@mui/material';
+import { Avatar, Box, Button, Container, createTheme, CssBaseline, Divider, Grid, IconButton, List, ListItem, ListItemText, ThemeProvider, Typography } from '@mui/material';
 import { useExerciseContext } from '../../context/exercise.context';
 import { FeedbackType, useFeedbackContext } from '../../context/feedback.context';
 import { useWorkoutContext } from '../../context/workout.context';
 import { Exercise } from '../../models/exercise.model';
 import { initialWorkoutRender, Workout } from '../../models/workout.model';
 import FinishWorkoutModal from '../FinishWorkoutModal';
+import Loading from '../Loading';
 import { parseExerciseCategories } from './workout.service';
 
 const WorkoutRender = () => {
@@ -60,16 +61,7 @@ const WorkoutRender = () => {
 
   return (
     <>
-      { loading &&
-        <ThemeProvider theme={theme}>
-          <Container component='main' maxWidth='md'>
-            <CssBaseline />
-            <Box sx={{ marginTop: 8 }}>
-              <LinearProgress />
-            </Box>
-          </Container>
-        </ThemeProvider>
-      }
+      { loading && <Loading /> }
       { id && !loading &&
         <ThemeProvider theme={theme}>
           <Container component='main' maxWidth='md'>

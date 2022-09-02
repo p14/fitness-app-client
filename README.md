@@ -16,7 +16,7 @@ This application is built using React, Typescript, and MaterialUI for a quick an
 
 ```
 PORT=3000
-REACT_APP_API_URL=http://localhost:4000/api
+REACT_APP_API_URL=http://localhost:4000
 ```
 
 ### Executing Program

@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { LockOutlined } from '@mui/icons-material';
-import { Avatar, Box, Button, Container, createTheme, CssBaseline, FormControl, Grid, LinearProgress, TextField, ThemeProvider, Typography } from '@mui/material';
+import { Avatar, Box, Button, Container, createTheme, CssBaseline, FormControl, Grid, TextField, ThemeProvider, Typography } from '@mui/material';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { register, setTokenStorage } from '../../api/auth.api';
 import { FeedbackType, useFeedbackContext } from '../../context/feedback.context';
 import { useSessionContext } from '../../context/session.context';
 import { initialRegisterData, RegisterData } from '../../models/auth.model';
+import Loading from '../Loading';
 
 const RegisterForm: React.FC = () => {
 
@@ -20,19 +21,10 @@ const RegisterForm: React.FC = () => {
 
   const handleRegister = (registerData: RegisterData) => {
     setLoading(true);
-    const startingServers = setTimeout(() => {
-      feedbackContext.setFeedback({
-        message: 'Firing up the (free) servers, this might take a minute.', 
-        type: FeedbackType.WARNING,
-        open: true,
-      });
-    }, 5000);
-
     register(registerData)
       .then((response) => response.data)
       .then((data) => {
         setLoading(false);
-        clearTimeout(startingServers);
         setTokenStorage(data);
         sessionContext.setSession(true, data.user);
         feedbackContext.setFeedback({
@@ -62,7 +54,7 @@ const RegisterForm: React.FC = () => {
   const validationSchema = Yup.object().shape({
     firstName: Yup.string().required(),
     lastName: Yup.string().required(),
-    email: Yup.string().email('Invalid email address').required(),
+    username: Yup.string().required(),
     password: Yup.string().required(),
   });
 
@@ -80,16 +72,7 @@ const RegisterForm: React.FC = () => {
 
   return (
     <>
-      { loading &&
-        <ThemeProvider theme={theme}>
-          <Container component='main' maxWidth='md'>
-            <CssBaseline />
-            <Box sx={{ marginTop: 8 }}>
-              <LinearProgress />
-            </Box>
-          </Container>
-        </ThemeProvider>
-      }
+      { loading && <Loading /> }
       { !loading &&
         <ThemeProvider theme={theme}>
           <Container component='main' maxWidth='md'>
@@ -131,12 +114,12 @@ const RegisterForm: React.FC = () => {
                       <Grid item xs={12}>
                         <TextField
                           fullWidth
-                          value={formik.values.email}
+                          value={formik.values.username}
                           onChange={formik.handleChange}
-                          error={formik.touched.email && Boolean(formik.errors.email)}
-                          helperText={formik.touched.email && formik.errors.email}
-                          name='email'
-                          label='Email'
+                          error={formik.touched.username && Boolean(formik.errors.username)}
+                          helperText={formik.touched.username && formik.errors.username}
+                          name='username'
+                          label='Username'
                         />
                       </Grid>
                       <Grid item xs={12}>

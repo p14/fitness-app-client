@@ -7,7 +7,7 @@ export interface SessionUser {
   _id: string
   firstName: string
   lastName: string
-  email: string
+  username: string
   role: UserRole
   workouts: string[]
 }
@@ -23,7 +23,7 @@ export const initialSessionContext: SessionContextUser = {
     _id: '',
     firstName: '',
     lastName: '',
-    email: '',
+    username: '',
     role: UserRole.USER,
     workouts: [] as string[],
   } as SessionUser,
@@ -36,7 +36,7 @@ export const createSessionState = (isLoggedIn: boolean, data: SessionUser): Sess
       _id: data._id,
       firstName: data.firstName,
       lastName: data.lastName,
-      email: data.email,
+      username: data.username,
       role: data.role,
       workouts: data.workouts,
     } as SessionUser,
@@ -83,7 +83,7 @@ export function SessionProvider({ children }: { children: any }) {
         _id: data._id,
         firstName: data.firstName,
         lastName: data.lastName,
-        email: data.email,
+        username: data.username,
         role: data.role,
         workouts: data.workouts,
       } as SessionUser,

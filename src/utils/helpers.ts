@@ -9,7 +9,7 @@ export const setupConfig = async (method: string, url: string, data?: any): Prom
 
   return {
     method,
-    url: process.env.REACT_APP_API_URL + url,
+    url: process.env.REACT_APP_API_URL + '/api' + url,
     headers: {
       'Content-Type': 'application/json',
       'Access-Control-Allow-Credentials': 'true',

@@ -49,7 +49,7 @@ const AccountForm = ({ user, setSession }: AccountFormProps) => {
   const validationSchema = Yup.object().shape({
     firstName: Yup.string().required(),
     lastName: Yup.string().required(),
-    email: Yup.string().email('Invalid email address').required(),
+    username: Yup.string().required(),
   });
 
   const formik = useFormik({
@@ -99,12 +99,12 @@ const AccountForm = ({ user, setSession }: AccountFormProps) => {
                   <Grid item xs={12}>
                     <TextField
                       fullWidth
-                      value={formik.values.email}
+                      value={formik.values.username}
                       onChange={formik.handleChange}
-                      error={formik.touched.email && Boolean(formik.errors.email)}
-                      helperText={formik.touched.email && formik.errors.email}
-                      name='email'
-                      label='Email'
+                      error={formik.touched.username && Boolean(formik.errors.username)}
+                      helperText={formik.touched.username && formik.errors.username}
+                      name='username'
+                      label='Username'
                     />
                   </Grid>
                 </Grid>

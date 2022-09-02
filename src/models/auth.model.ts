@@ -3,25 +3,25 @@ export interface TokenData {
 }
 
 export interface LoginData {
-  email: string
+  username: string
   password: string
 }
 
 export interface RegisterData {
   firstName: string
   lastName: string
-  email: string
+  username: string
   password: string
 }
 
 export const initialLoginData = {
-  email: '',
+  username: '',
   password: '',
 }
 
 export const initialRegisterData = {
   firstName: '',
   lastName: '',
-  email: '',
+  username: '',
   password: '',
 }
